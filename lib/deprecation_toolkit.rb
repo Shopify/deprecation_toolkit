@@ -1,5 +1,6 @@
+# frozen_string_literal: true
+
 require "deprecation_toolkit/version"
 
 module DeprecationToolkit
-  # Your code goes here...
 end
