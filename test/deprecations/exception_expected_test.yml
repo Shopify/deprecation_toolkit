@@ -1,0 +1,9 @@
+---
+test_exception_is_raised_when_new_deprecations_are_introduced:
+- 'DEPRECATION WARNING: First deprecation'
+- 'DEPRECATION WARNING: Second deprecation'
+- 'DEPRECATION WARNING: Third deprecation'
+test_exception_is_raised_when_some_deprecations_are_removed:
+- 'DEPRECATION WARNING: First deprecation'
+- 'DEPRECATION WARNING: Second deprecation'
+- 'DEPRECATION WARNING: Third deprecation'

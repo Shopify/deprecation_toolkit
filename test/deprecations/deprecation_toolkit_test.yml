@@ -1,0 +1,5 @@
+---
+test_no_exception_raised_when_no_difference_between_current_deprecations_and_recorded_deprecations:
+- 'DEPRECATION WARNING: First deprecation'
+- 'DEPRECATION WARNING: Second deprecation'
+- 'DEPRECATION WARNING: Third deprecation'
