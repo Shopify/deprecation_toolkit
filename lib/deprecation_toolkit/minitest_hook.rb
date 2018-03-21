@@ -4,9 +4,7 @@ require "minitest/test"
 
 module DeprecationToolkit
   module Minitest
-    def after_teardown
-      super
-
+    def ensure_no_deprecation
       current_deprecations = Collector.new(Collector.deprecations)
       recorded_deprecations = Collector.load(self)
       if current_deprecations != recorded_deprecations
@@ -18,4 +16,8 @@ module DeprecationToolkit
   end
 end
 
-Minitest::Test.include(DeprecationToolkit::Minitest)
+class Minitest::Test
+  include DeprecationToolkit::Minitest
+
+  TEARDOWN_METHODS << "ensure_no_deprecation"
+end

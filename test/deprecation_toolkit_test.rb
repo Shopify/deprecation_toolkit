@@ -49,10 +49,9 @@ class ExceptionExpectedTest < ActiveSupport::TestCase
     ActiveSupport::Deprecation.warn("Second deprecation")
   end
 
-  def after_teardown
+  def ensure_no_deprecation
     begin
       super
-      raise "An error was expected but did not happen."
     rescue DeprecationToolkit::Behaviors::DeprecationException => e
       assert_instance_of(@expected_error_class, e)
       @deprecations.each do |expected|

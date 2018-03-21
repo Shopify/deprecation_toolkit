@@ -34,7 +34,7 @@ class ConfigurationTest < ActiveSupport::TestCase
     end
   end
 
-  def after_teardown
+  def ensure_no_deprecation
     old_value = DeprecationToolkit::Configuration.send(config_under_test)
     DeprecationToolkit::Configuration.send("#{config_under_test}=", @config_value)
     super
