@@ -2,4 +2,7 @@ source "https://rubygems.org"
 
 gemspec
 
-gem 'byebug'
+group :deployment do
+  gem 'package_cloud'
+  gem 'rake'
+end
