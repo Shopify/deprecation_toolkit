@@ -16,14 +16,18 @@ module DeprecationToolkit
       deprecation_file = recorded_deprecations_path(test)
       create_deprecation_file(deprecation_file) unless deprecation_file.exist?
 
-      content = YAML.load(deprecation_file.read)
+      content = YAML.load_file(deprecation_file)
       if deprecations.any?
         content[test.name] = deprecations
       else
         content.delete(test.name)
       end
 
-      deprecation_file.write(YAML.dump(content))
+      if content.any?
+        deprecation_file.write(YAML.dump(content))
+      else
+        deprecation_file.delete
+      end
     end
 
     private
