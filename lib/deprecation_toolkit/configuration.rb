@@ -10,5 +10,6 @@ module DeprecationToolkit
     config_accessor(:allowed_deprecations) { [] }
     config_accessor(:deprecation_path) { "test/deprecations" }
     config_accessor(:attach_to) { [:rails] }
+    config_accessor(:warnings_treated_as_deprecation) { [] }
   end
 end
