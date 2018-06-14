@@ -90,3 +90,11 @@ DeprecationToolkit::Configuration.allowed_deprecations = [/Hello World/]
 ActiveSupport::Deprecation.warn('Hello World')
 ```
 
+🔨 `#DeprecationToolkit::Configuration#warnings_treated_as_deprecation`
+
+```
+Most gems doesn't use ActiveSupport::Deprecation to deprecate their code but instead just uses `Kernel#warn` to output
+a message in the console.
+The DeprecationToolkit gem allows you to configure which warnings should be treated as deprecations in order for you
+to keep track of them as if they were regular deprecations.
+```
