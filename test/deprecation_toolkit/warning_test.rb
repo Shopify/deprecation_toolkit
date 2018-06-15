@@ -21,5 +21,31 @@ module DeprecationToolkit
         trigger_deprecation_toolkit_behavior
       end
     end
+
+    test 'warn can be called with an array' do
+      Configuration.warnings_treated_as_deprecation = [/#example is deprecated/, /#something is deprecated/]
+
+      error = assert_raises Behaviors::DeprecationIntroduced do
+        warn ['#example is deprecated', '#something is deprecated']
+
+        trigger_deprecation_toolkit_behavior
+      end
+
+      assert_match(/DEPRECATION WARNING: #example is deprecated/, error.message)
+      assert_match(/DEPRECATION WARNING: #something is deprecated/, error.message)
+    end
+
+    test 'warn can be called with multiple arguments' do
+      Configuration.warnings_treated_as_deprecation = [/#example is deprecated/, /#something is deprecated/]
+
+      error = assert_raises Behaviors::DeprecationIntroduced do
+        warn '#example is deprecated', '#something is deprecated'
+
+        trigger_deprecation_toolkit_behavior
+      end
+
+      assert_match(/DEPRECATION WARNING: #example is deprecated/, error.message)
+      assert_match(/DEPRECATION WARNING: #something is deprecated/, error.message)
+    end
   end
 end

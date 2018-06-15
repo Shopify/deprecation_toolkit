@@ -15,10 +15,10 @@ end
 Warning.singleton_class.prepend(DeprecationToolkit::Warning)
 
 # https://bugs.ruby-lang.org/issues/12944
-if Gem::Version.new(ENV['RUBY_VERSION']) <= Gem::Version.new('2.5')
+if RUBY_VERSION <= '2.5.0' && RUBY_ENGINE == 'ruby'
   module Kernel
-    def warn(str)
-      Warning.warn(str)
+    def warn(*messages)
+      Array(messages.flatten).each { |msg| Warning.warn(msg) }
     end
   end
 end
