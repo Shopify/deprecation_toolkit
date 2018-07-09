@@ -32,7 +32,7 @@ module DeprecationToolkit
       end
 
       assert_match(/DEPRECATION WARNING: #example is deprecated/, error.message)
-      assert_match(/DEPRECATION WARNING: #something is deprecated/, error.message)
+      assert_match(/#something is deprecated/, error.message)
     end
 
     test 'warn can be called with multiple arguments' do
@@ -45,7 +45,7 @@ module DeprecationToolkit
       end
 
       assert_match(/DEPRECATION WARNING: #example is deprecated/, error.message)
-      assert_match(/DEPRECATION WARNING: #something is deprecated/, error.message)
+      assert_match(/#something is deprecated/, error.message)
     end
 
     test 'warn works as usual when no warnings are treated as deprecation' do
