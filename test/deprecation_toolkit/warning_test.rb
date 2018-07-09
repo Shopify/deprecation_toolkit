@@ -47,5 +47,11 @@ module DeprecationToolkit
       assert_match(/DEPRECATION WARNING: #example is deprecated/, error.message)
       assert_match(/DEPRECATION WARNING: #something is deprecated/, error.message)
     end
+
+    test 'warn works as usual when no warnings are treated as deprecation' do
+      assert_nothing_raised do
+        warn 'Test warn works correctly'
+      end
+    end
   end
 end
