@@ -19,6 +19,7 @@ module DeprecationToolkit
     class DeprecationIntroduced < DeprecationException
       def initialize(current_deprecations, recorded_deprecations)
         introduced_deprecations = current_deprecations - recorded_deprecations
+
         message = <<~EOM
           You have introduced new deprecations in the codebase. Fix or record them in order to discard this error.
           You can record deprecations by adding the `--record-deprecations` flag when running your tests.
@@ -33,6 +34,7 @@ module DeprecationToolkit
     class DeprecationRemoved < DeprecationException
       def initialize(current_deprecations, recorded_deprecations)
         removed_deprecations = recorded_deprecations - current_deprecations
+
         message = <<~EOM
           You have removed deprecations from the codebase. Thanks for being an awesome person.
           The recorded deprecations needs to be updated to reflect your changes.
