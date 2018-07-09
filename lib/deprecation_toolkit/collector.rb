@@ -42,11 +42,14 @@ module DeprecationToolkit
       other = other.deprecations_without_stacktrace
 
       other.each do |deprecation|
-        if index = current.index(deprecation)
+        index = current.index(deprecation)
+
+        if index
           current.delete_at(index)
           difference.delete_at(index)
         end
       end
+
       difference
     end
   end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "minitest/test"
+require "minitest"
 
 module DeprecationToolkit
   module Minitest
@@ -16,8 +16,10 @@ module DeprecationToolkit
   end
 end
 
-class Minitest::Test
-  include DeprecationToolkit::Minitest
+module Minitest
+  class Test
+    include DeprecationToolkit::Minitest
 
-  TEARDOWN_METHODS << "trigger_deprecation_toolkit_behavior"
+    TEARDOWN_METHODS << "trigger_deprecation_toolkit_behavior"
+  end
 end
