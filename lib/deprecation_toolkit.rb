@@ -15,4 +15,3 @@ end
 
 require "deprecation_toolkit/minitest_hook"
 require "deprecation_toolkit/warning"
-

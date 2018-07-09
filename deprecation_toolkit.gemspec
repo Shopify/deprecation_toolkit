@@ -7,7 +7,7 @@ require "deprecation_toolkit/version"
 Gem::Specification.new do |spec|
   spec.name = "deprecation_toolkit"
   spec.version = DeprecationToolkit::VERSION
-  spec.authors = ["Shopify"]
+  spec.authors = %w(Shopify)
   spec.email = ["rails@shopify.com"]
 
   spec.summary = "Deprecation Toolkit around ActiveSupport::Deprecation"
@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
   spec.files = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test)/})
   end
-  spec.require_paths = ["lib"]
+  spec.require_paths = %w(lib)
 
   spec.add_runtime_dependency 'activesupport', '>= 5.0'
 
