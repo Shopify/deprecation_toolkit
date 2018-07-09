@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require "deprecation_toolkit/minitest_hook"
-require "deprecation_toolkit/warning"
-
 module DeprecationToolkit
   autoload :DeprecationSubscriber,     "deprecation_toolkit/deprecation_subscriber"
   autoload :Configuration,             "deprecation_toolkit/configuration"
@@ -15,3 +12,7 @@ module DeprecationToolkit
     autoload :Record,                  "deprecation_toolkit/behaviors/record"
   end
 end
+
+require "deprecation_toolkit/minitest_hook"
+require "deprecation_toolkit/warning"
+
