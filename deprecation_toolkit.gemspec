@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.email = ["rails@shopify.com"]
 
   spec.summary = "Deprecation Toolkit around ActiveSupport::Deprecation"
-  spec.homepage = "https://github/shopify/deprecation_toolkit"
+  spec.homepage = "https://github.com/shopify/deprecation_toolkit"
   spec.license = "MIT"
 
   spec.required_ruby_version = '>= 2.3'
