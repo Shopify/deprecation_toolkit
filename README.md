@@ -96,4 +96,4 @@ to keep track of them as if they were regular deprecations.
 
 ## License
 
-Deprecation Tollkit is lincensed under the [MIT license](LICENSE.txt).
+Deprecation Toolkit is lincensed under the [MIT license](LICENSE.txt).
