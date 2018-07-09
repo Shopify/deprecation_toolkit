@@ -17,6 +17,8 @@ Warning.singleton_class.prepend(DeprecationToolkit::Warning)
 # https://bugs.ruby-lang.org/issues/12944
 if RUBY_VERSION <= '2.5.0' && RUBY_ENGINE == 'ruby'
   module Kernel
+    remove_method :warn
+
     def warn(*messages)
       Array(messages.flatten).each { |msg| Warning.warn(msg) }
     end
