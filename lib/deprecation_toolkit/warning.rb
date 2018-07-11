@@ -2,25 +2,40 @@
 
 module DeprecationToolkit
   module Warning
-    def warn(str)
-      if DeprecationToolkit::Configuration.warnings_treated_as_deprecation.any? { |warning| warning =~ str }
-        ActiveSupport::Deprecation.warn(str)
-      else
-        super
-      end
+    extend self
+
+    def deprecation_triggered?(str)
+      DeprecationToolkit::Configuration.warnings_treated_as_deprecation.any? { |warning| warning =~ str }
     end
   end
 end
 
-Warning.singleton_class.prepend(DeprecationToolkit::Warning)
+# Warning is a new feature in ruby 2.5
+module Warning
+  def warn(str)
+    if DeprecationToolkit::Warning.deprecation_triggered?(str)
+      ActiveSupport::Deprecation.warn(str)
+    else
+      super
+    end
+  end
+end
 
-# https://bugs.ruby-lang.org/issues/12944
-if RUBY_VERSION <= '2.5.0' && RUBY_ENGINE == 'ruby'
+# Support for version older < 2.5
+# Note that the `Warning` module exists in Ruby 2.4 but has a bug https://bugs.ruby-lang.org/issues/12944
+if RUBY_VERSION < '2.5.0' && RUBY_ENGINE == 'ruby'
   module Kernel
-    remove_method :warn
+    alias_method :__original_warn, :warn
 
     def warn(*messages)
-      Array(messages.flatten).each { |msg| Warning.warn(msg) }
+      message = messages.join("\n")
+      message += "\n" unless message.end_with?("\n")
+
+      if DeprecationToolkit::Warning.deprecation_triggered?(message)
+        ActiveSupport::Deprecation.warn(message)
+      else
+        __original_warn(messages)
+      end
     end
   end
 end
