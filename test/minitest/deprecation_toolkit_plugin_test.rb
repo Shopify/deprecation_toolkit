@@ -5,7 +5,11 @@ require "optparse"
 
 module Minitest
   class DeprecationToolkitPluginTest < ActiveSupport::TestCase
-    include ActiveSupport::Testing::Isolation
+    if ActiveSupport.gem_version.to_s < "5.0"
+      parallelize_me!
+    else
+      include ActiveSupport::Testing::Isolation
+    end
 
     test ".plugin_deprecation_toolkit_options when running test with the `-r` flag" do
       option_parser = OptionParser.new
