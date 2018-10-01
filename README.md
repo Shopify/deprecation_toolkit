@@ -73,7 +73,7 @@ DeprecationToolkit::Configuration.behavior = StatsdBehavior
 
 ### 🔨 `#DeprecationToolkit::Configuration#allowed_deprecations`
 
-You can ignore some depcreations using `allowed_deprecations`. `allowed_deprecations` accepts an array of Regexp.
+You can ignore some deprecations using `allowed_deprecations`. `allowed_deprecations` accepts an array of Regexp.
 
 Whenever a deprecation matches one of the regex, it is ignored.
 
