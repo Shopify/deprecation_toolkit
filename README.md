@@ -2,15 +2,15 @@
 
 ## Introduction
 
-The Deprecation Toolkit is a gem to help you get rid of deprecations in your codebase.
-Having deprecations in your application is usually a sign that something will break whenever a third dependency will get updated. The sooner the better to fix them!
-Fixing all deprecations at once might be though depending on how big your app is and how much deprecations needs to be fixed. You might have to progressively resolve them while making sure your team doesn't add new one ➰. This is where this gem comes handy!
+Deprecation Toolkit is a gem that helps you get rid of deprecations in your codebase.
+Having deprecations in your application usually means that something will break whenever you upgrade third-party dependencies. The sooner the better to fix them!
+Fixing all deprecations at once might be tough depending on the size of your app and the number of deprecations. You might have to progressively resolve them while making sure your team doesn't add new ones. This is where this gem comes handy!
 
 
 ## How it works
 
 The Deprecation Toolkit gem works by using a [shitlist approach](https://confreaks.tv/videos/reddotrubyconf2017-shitlist-driven-development-and-other-tricks-for-working-on-large-codebases).
-First, all current existing deprecations in your codebase are recorded into `.yml` files. When running a test that has non-recorded deprecations, the Deprecation Toolkit gem will trigger a behavior of your choice (by default raise an error).
+First, the gem records all existing deprecations into `.yml` files. When running a test that have non-recorded deprecations after the initial recording, Deprecation Toolkit triggers a behavior of your choice (by default it raises an error).
 
 ## Recording Deprecations
 
@@ -25,9 +25,9 @@ rails test <path_to_my_test.rb> -r
 
 ### 🔨 `#DeprecationToolkit::Configuration#deprecation_path`
 
-You can control where the recorded deprecations are read and write into. By default, deprecations will be recorded in the `test/deprecations` folder.
+You can control where recorded deprecations are saved and read from. By default, deprecations are recorded in the `test/deprecations` folder.
 
-The `deprecation_path` either accepts a string or a proc. When using a proc, the proc will be passed an argument which is the path of the test file being run.
+The `deprecation_path` either accepts a string or a proc. The proc is called with the path of the running test file.
 
 ```ruby
 DeprecationToolkit::Configuration.deprecation_path = 'test/deprecations'
@@ -42,9 +42,9 @@ end
 
 ### 🔨 `#DeprecationToolkit::Configuration#behavior`
 
-Behaviors defines what will happen when a non-recorded deprecations is encountered.
+Behaviors define what happens when non-recorded deprecations are encountered.
 
-Behaviors are class that responds to the `trigger` message.
+Behaviors are classes that have a `.trigger` class method.
 
 This gem provides 3 behaviors, the default one being `DeprecationToolkit::Behaviors::Raise`.
 
@@ -59,7 +59,7 @@ This gem provides 3 behaviors, the default one being `DeprecationToolkit::Behavi
 DeprecationToolkit::Configuration.behavior = DeprecationToolkit::Behaviors::Record
 ```
 
-You can also create your own behavior class and perform the logic you want. Your behavior needs to respond to the `.trigger` message.
+You can also create your own behavior class and perform the logic you want. Your behavior needs to respond to `.trigger`.
 
 ```ruby
 class StatsdBehavior
@@ -73,25 +73,22 @@ DeprecationToolkit::Configuration.behavior = StatsdBehavior
 
 ### 🔨 `#DeprecationToolkit::Configuration#allowed_deprecations`
 
-If you want to allow some deprecations, this is where you'll configure it. The `allowed_deprecations` configuration accepts an
-array of Regexp.
+You can ignore some depcreations using `allowed_deprecations`. `allowed_deprecations` accepts an array of Regexp.
 
-Whenever a deprecation matches one of the regex, the deprecation will be ignored
+Whenever a deprecation matches one of the regex, it is ignored.
 
 ```ruby
 DeprecationToolkit::Configuration.allowed_deprecations = [/Hello World/]
 
-# Let's imagine a third dependency adds a deprecation like this,
-# the Deprecation Toolkit will simply ignore it.
-ActiveSupport::Deprecation.warn('Hello World')
+ActiveSupport::Deprecation.warn('Hello World') # ignored by Deprecation Toolkit
 ```
 
 ### 🔨 `#DeprecationToolkit::Configuration#warnings_treated_as_deprecation`
 
-Most gems doesn't use `ActiveSupport::Deprecation` to deprecate their code but instead just uses `Kernel#warn` to output
+Most gems don't use `ActiveSupport::Deprecation` to deprecate their code but instead just use `Kernel#warn` to output
 a message in the console.
 
-The DeprecationToolkit gem allows you to configure which warnings should be treated as deprecations in order for you
+Deprecation Toolkit allows you to configure which warnings should be treated as deprecations in order for you
 to keep track of them as if they were regular deprecations.
 
 ## License
