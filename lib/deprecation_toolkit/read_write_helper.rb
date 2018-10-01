@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "active_support/core_ext/string/inflections"
+require "bundler"
 require "yaml"
 
 module DeprecationToolkit

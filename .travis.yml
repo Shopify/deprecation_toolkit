@@ -8,6 +8,7 @@ rvm:
   - 2.4
   - 2.5
 gemfile:
+  - gemfiles/activesupport_4.2.gemfile
   - gemfiles/activesupport_5.0.gemfile
   - gemfiles/activesupport_5.1.gemfile
   - gemfiles/activesupport_5.2.gemfile
