@@ -48,6 +48,7 @@ module DeprecationToolkit
 
       def trigger_deprecation_toolkit_behavior
         super
+        flunk if @expected_exception
       rescue DeprecationIntroduced, DeprecationRemoved => e
         assert_equal @expected_exception, e.class
       end
