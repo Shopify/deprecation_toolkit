@@ -21,6 +21,14 @@ module DeprecationToolkit
         ActiveSupport::Deprecation.warn("Bar")
       end
 
+      test ".trigger raises an DeprecationIntroduced error when deprecations are introduced with a gem deprecation" do
+        @expected_exception = DeprecationIntroduced
+        deprecator = ActiveSupport::Deprecation.new("2.0", "CustomGem")
+
+        deprecator.warn("Foo")
+        deprecator.warn("Bar")
+      end
+
       test ".trigger raises a DeprecationRemoved error when deprecations are removed" do
         @expected_exception = DeprecationRemoved
 
