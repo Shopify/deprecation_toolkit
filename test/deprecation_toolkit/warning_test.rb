@@ -22,6 +22,16 @@ module DeprecationToolkit
       end
     end
 
+    test 'Kernel.warn treats warnings as deprecations ' do
+      Configuration.warnings_treated_as_deprecation = [/#example is deprecated/]
+
+      assert_raises Behaviors::DeprecationIntroduced do
+        Kernel.warn '#example is deprecated'
+
+        trigger_deprecation_toolkit_behavior
+      end
+    end
+
     test 'warn can be called with an array' do
       Configuration.warnings_treated_as_deprecation = [/#example is deprecated/, /#something is deprecated/]
 

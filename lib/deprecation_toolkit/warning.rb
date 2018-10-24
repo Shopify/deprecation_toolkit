@@ -25,17 +25,23 @@ end
 # Note that the `Warning` module exists in Ruby 2.4 but has a bug https://bugs.ruby-lang.org/issues/12944
 if RUBY_VERSION < '2.5.0' && RUBY_ENGINE == 'ruby'
   module Kernel
-    alias_method :__original_warn, :warn
+    class << self
+      alias_method :__original_warn, :warn
+
+      def warn(*messages)
+        message = messages.join("\n")
+        message += "\n" unless message.end_with?("\n")
+
+        if DeprecationToolkit::Warning.deprecation_triggered?(message)
+          ActiveSupport::Deprecation.warn(message)
+        else
+          __original_warn(messages)
+        end
+      end
+    end
 
     def warn(*messages)
-      message = messages.join("\n")
-      message += "\n" unless message.end_with?("\n")
-
-      if DeprecationToolkit::Warning.deprecation_triggered?(message)
-        ActiveSupport::Deprecation.warn(message)
-      else
-        __original_warn(messages)
-      end
+      Kernel.warn(messages)
     end
   end
 end
