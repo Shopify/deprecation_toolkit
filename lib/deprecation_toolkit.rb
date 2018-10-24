@@ -11,6 +11,21 @@ module DeprecationToolkit
     autoload :Raise,                   "deprecation_toolkit/behaviors/raise"
     autoload :Record,                  "deprecation_toolkit/behaviors/record"
   end
+
+  def self.add_notify_behavior
+    notify = ActiveSupport::Deprecation::DEFAULT_BEHAVIORS[:notify]
+    behaviors = ActiveSupport::Deprecation.behavior
+
+    unless behaviors.find { |behavior| behavior == notify }
+      ActiveSupport::Deprecation.behavior = behaviors << notify
+    end
+  end
+
+  def self.attach_subscriber
+    Configuration.attach_to.each do |gem_name|
+      DeprecationSubscriber.attach_to gem_name
+    end
+  end
 end
 
 require "deprecation_toolkit/minitest_hook"
