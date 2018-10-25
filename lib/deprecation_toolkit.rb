@@ -26,6 +26,15 @@ module DeprecationToolkit
       DeprecationSubscriber.attach_to gem_name
     end
   end
+
+  def self.initialize
+    unless defined?(@initialized)
+      add_notify_behavior
+      attach_subscriber
+
+      @initialized = true
+    end
+  end
 end
 
 require "deprecation_toolkit/minitest_hook"

@@ -14,7 +14,6 @@ module Minitest
       DeprecationToolkit::Configuration.behavior = DeprecationToolkit::Behaviors::Record
     end
 
-    DeprecationToolkit.add_notify_behavior
-    DeprecationToolkit.attach_subscriber
+    DeprecationToolkit.initialize
   end
 end
