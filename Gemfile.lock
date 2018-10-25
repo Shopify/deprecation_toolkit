@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    deprecation_toolkit (1.0.2)
+    deprecation_toolkit (1.0.3)
       activesupport (>= 4.2)
 
 GEM
@@ -14,7 +14,7 @@ GEM
       tzinfo (~> 1.1)
     ast (2.4.0)
     concurrent-ruby (1.0.5)
-    i18n (1.1.0)
+    i18n (1.1.1)
       concurrent-ruby (~> 1.0)
     jaro_winkler (1.5.1)
     minitest (5.11.3)
@@ -50,4 +50,4 @@ DEPENDENCIES
   rubocop
 
 BUNDLED WITH
-   1.16.5
+   1.16.6
