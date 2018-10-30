@@ -23,6 +23,8 @@ module DeprecationToolkit
 
   def self.attach_subscriber
     Configuration.attach_to.each do |gem_name|
+      next if DeprecationSubscriber.already_attached?
+
       DeprecationSubscriber.attach_to gem_name
     end
   end
