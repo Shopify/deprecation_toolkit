@@ -4,6 +4,10 @@ require "active_support/subscriber"
 
 module DeprecationToolkit
   class DeprecationSubscriber < ActiveSupport::Subscriber
+    def self.already_attached?
+      notifier != nil
+    end
+
     def deprecation(event)
       message = event.payload[:message]
 
