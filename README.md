@@ -73,7 +73,7 @@ DeprecationToolkit::Configuration.behavior = StatsdBehavior
 
 ### 🔨 `#DeprecationToolkit::Configuration#allowed_deprecations`
 
-You can ignore some deprecations using `allowed_deprecations`. `allowed_deprecations` accepts an array of Regexp.
+You can ignore some deprecations using `allowed_deprecations`. `allowed_deprecations` accepts an array of Regexp and Procs.
 
 Whenever a deprecation matches one of the regex, it is ignored.
 
@@ -81,6 +81,19 @@ Whenever a deprecation matches one of the regex, it is ignored.
 DeprecationToolkit::Configuration.allowed_deprecations = [/Hello World/]
 
 ActiveSupport::Deprecation.warn('Hello World') # ignored by Deprecation Toolkit
+```
+
+When passing procs, each proc will get passed the deprecation message and the callstack.
+This is useful if you want to whitelist deprecations based on the caller.
+
+```ruby
+DeprecationToolkit::Configuration.allowed_deprecations = [
+  ->(message, stack) { message ~= 'Foo' && stack.first.label == 'method_triggering_deprecation' }
+]
+
+def method_triggering_deprecation
+  ActiveSupport::Deprecation.warn('Foo') # Ignored by the the DeprecationToolkit
+end
 ```
 
 ### 🔨 `#DeprecationToolkit::Configuration#warnings_treated_as_deprecation`

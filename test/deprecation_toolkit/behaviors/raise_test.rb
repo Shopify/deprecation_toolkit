@@ -34,7 +34,7 @@ module DeprecationToolkit
         end
       end
 
-      test ".trigger does not raise when deprecations are allowed" do
+      test ".trigger does not raise when deprecations are allowed with Regex" do
         @old_allowed_deprecations = Configuration.allowed_deprecations
         Configuration.allowed_deprecations = [/John Doe/]
 
@@ -43,6 +43,30 @@ module DeprecationToolkit
           assert_nothing_raised { trigger_deprecation_toolkit_behavior }
         ensure
           Configuration.allowed_deprecations = @old_allowed_deprecations
+        end
+      end
+
+      test ".trigger does not raise when deprecations are allowed with Procs" do
+        class_eval <<-RUBY, 'my_file.rb', 1337
+          def deprecation_caller
+            deprecation_callee
+          end
+
+          def deprecation_callee
+            ActiveSupport::Deprecation.warn("John Doe")
+          end
+        RUBY
+
+        old_allowed_deprecations = Configuration.allowed_deprecations
+        Configuration.allowed_deprecations = [
+          ->(_, stack) { stack.first.to_s =~ /my_file\.rb/ }
+        ]
+
+        begin
+          deprecation_caller
+          assert_nothing_raised { trigger_deprecation_toolkit_behavior }
+        ensure
+          Configuration.allowed_deprecations = old_allowed_deprecations
         end
       end
 
