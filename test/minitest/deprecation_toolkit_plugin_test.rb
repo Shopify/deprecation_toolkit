@@ -40,5 +40,25 @@ module Minitest
 
       assert_includes ActiveSupport::Deprecation.behavior, behavior
     end
+
+    test ".plugin_deprecation_toolkit_init doesn't reattach subscriber when called multiple times" do
+      deprecator = ActiveSupport::Deprecation.new("1.0", "my_gem")
+      deprecator.behavior = :notify
+      DeprecationToolkit::DeprecationSubscriber.attach_to(:my_gem)
+
+      Minitest.plugin_deprecation_toolkit_init({})
+
+      assert_raises(DeprecationToolkit::Behaviors::DeprecationIntroduced) do
+        deprecator.warn("Deprecated!")
+        trigger_deprecation_toolkit_behavior
+      end
+
+      error = assert_raises(DeprecationToolkit::Behaviors::DeprecationIntroduced) do
+        ActiveSupport::Deprecation.warn("Deprecated!")
+        trigger_deprecation_toolkit_behavior
+      end
+
+      assert_equal 1, error.message.scan("DEPRECATION WARNING: Deprecated!").count
+    end
   end
 end
