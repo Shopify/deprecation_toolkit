@@ -3,6 +3,7 @@
 ## master (unreleased)
 ### Bug fixes
 
+## 1.1.0 (2018-11-13)
 ### New Features
 * [#28](https://github.com/Shopify/deprecation_toolkit/pull/28): `Configuration.allowed_deprecations now accepts Procs.
   This is useful if you need to whitelist deprecations based on the caller.
