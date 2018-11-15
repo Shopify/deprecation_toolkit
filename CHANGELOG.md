@@ -3,6 +3,8 @@
 ## master (unreleased)
 ### Bug fixes
 
+* [#29](https://github.com/Shopify/deprecation_toolkit/pull/29): Fix issue where the error class triggered was incorrect in some circumstances. (@Edouard-chin)
+
 ## 1.1.0 (2018-11-13)
 ### New Features
 * [#28](https://github.com/Shopify/deprecation_toolkit/pull/28): `Configuration.allowed_deprecations now accepts Procs.

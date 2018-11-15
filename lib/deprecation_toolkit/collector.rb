@@ -9,6 +9,7 @@ module DeprecationToolkit
 
     class_attribute :deprecations
     self.deprecations = []
+    delegate :size, to: :deprecations
 
     class << self
       def collect(message)
