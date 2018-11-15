@@ -33,6 +33,12 @@ module DeprecationToolkit
         ActiveSupport::Deprecation.warn("C")
       end
 
+      test '.trigger raises a DeprecationMismatch when same number of deprecations are triggered with mismatches' do
+        @expected_exception = DeprecationMismatch
+
+        ActiveSupport::Deprecation.warn("A")
+      end
+
       test ".trigger does not raise when deprecations are triggered but were already recorded" do
         assert_nothing_raised do
           ActiveSupport::Deprecation.warn("Foo")
@@ -79,7 +85,7 @@ module DeprecationToolkit
       def trigger_deprecation_toolkit_behavior
         super
         flunk if defined?(@expected_exception)
-      rescue DeprecationIntroduced, DeprecationRemoved => e
+      rescue DeprecationIntroduced, DeprecationRemoved, DeprecationMismatch => e
         assert_equal @expected_exception, e.class
       end
     end
