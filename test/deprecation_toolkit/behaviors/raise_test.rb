@@ -27,6 +27,12 @@ module DeprecationToolkit
         ActiveSupport::Deprecation.warn("Foo")
       end
 
+      test '.trigger raises a DeprecationRemoved when less deprecations than expected are triggerd and mismatches' do
+        @expected_exception = DeprecationRemoved
+
+        ActiveSupport::Deprecation.warn("C")
+      end
+
       test ".trigger does not raise when deprecations are triggered but were already recorded" do
         assert_nothing_raised do
           ActiveSupport::Deprecation.warn("Foo")
