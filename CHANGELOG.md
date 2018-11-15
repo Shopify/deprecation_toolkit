@@ -1,6 +1,9 @@
 # Change log
 
 ## master (unreleased)
+### New Features
+
+* [#30](https://github.com/Shopify/deprecation_toolkit/pull/30): Introduce a `DeprecationMismatch` error class. (@Edouard-chin)
 ### Bug fixes
 
 * [#29](https://github.com/Shopify/deprecation_toolkit/pull/29): Fix issue where the error class triggered was incorrect in some circumstances. (@Edouard-chin)

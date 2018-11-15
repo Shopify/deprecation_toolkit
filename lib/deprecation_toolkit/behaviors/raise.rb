@@ -6,8 +6,10 @@ module DeprecationToolkit
       def self.trigger(_test, current_deprecations, recorded_deprecations)
         error_class = if current_deprecations.size > recorded_deprecations.size
           DeprecationIntroduced
-        else
+        elsif current_deprecations.size < recorded_deprecations.size
           DeprecationRemoved
+        else
+          DeprecationMismatch
         end
 
         raise error_class.new(current_deprecations, recorded_deprecations)
@@ -41,6 +43,24 @@ module DeprecationToolkit
           You can re-record deprecations by adding the `--record-deprecations` flag when running your tests.
 
           #{removed_deprecations.join("\n")}
+        EOM
+
+        super(message)
+      end
+    end
+
+    class DeprecationMismatch < DeprecationException
+      def initialize(current_deprecations, recorded_deprecations)
+        message = <<~EOM
+          The recorded deprecations for this test doesn't match the one that got triggered.
+          Fix or record the new deprecations to discard this error.
+
+          You can re-record deprecations by adding the `--record-deprecations` flag when running your tests.
+
+          ===== Expected
+          #{recorded_deprecations.deprecations.join("\n")}
+          ===== Actual
+          #{current_deprecations.deprecations.join("\n")}
         EOM
 
         super(message)
