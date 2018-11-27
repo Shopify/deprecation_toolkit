@@ -14,6 +14,10 @@ Gem::Specification.new do |spec|
   spec.homepage = "https://github.com/shopify/deprecation_toolkit"
   spec.license = "MIT"
 
+  spec.metadata["homepage_uri"] = spec.homepage
+  spec.metadata["source_code_uri"] = "https://github.com/shopify/deprecation_toolkit"
+  spec.metadata["changelog_uri"] = "https://github.com/Shopify/deprecation_toolkit/blob/master/CHANGELOG.md"
+
   spec.required_ruby_version = '>= 2.3'
 
   spec.files = `git ls-files -z`.split("\x0").reject do |f|
