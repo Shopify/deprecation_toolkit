@@ -1,13 +1,13 @@
 PATH
   remote: .
   specs:
-    deprecation_toolkit (1.1.0)
+    deprecation_toolkit (1.2.0)
       activesupport (>= 4.2)
 
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (5.2.1)
+    activesupport (5.2.1.1)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 0.7, < 2)
       minitest (~> 5.1)
