@@ -2,4 +2,9 @@ inherit_from:
   - https://shopify.github.io/ruby-style-guide/rubocop.yml
 
 AllCops:
-  TargetRubyVersion: 2.3
+  TargetRubyVersion: 2.5
+
+Style/MethodCallWithArgsParentheses:
+  Exclude:
+    - Gemfile
+    - gemfiles/*

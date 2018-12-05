@@ -16,14 +16,12 @@ module Minitest
     end
 
     test ".plugin_deprecation_toolkit_init set the behavior to `Record` when `record_deprecations` options is true" do
-      begin
-        previous_behavior = DeprecationToolkit::Configuration.behavior
-        Minitest.plugin_deprecation_toolkit_init(record_deprecations: true)
+      previous_behavior = DeprecationToolkit::Configuration.behavior
+      Minitest.plugin_deprecation_toolkit_init(record_deprecations: true)
 
-        assert_equal DeprecationToolkit::Behaviors::Record, DeprecationToolkit::Configuration.behavior
-      ensure
-        DeprecationToolkit::Configuration.behavior = previous_behavior
-      end
+      assert_equal(DeprecationToolkit::Behaviors::Record, DeprecationToolkit::Configuration.behavior)
+    ensure
+      DeprecationToolkit::Configuration.behavior = previous_behavior
     end
 
     test ".plugin_deprecation_toolkit_init add `notify` behavior to the deprecations behavior list" do
