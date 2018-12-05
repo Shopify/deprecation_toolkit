@@ -12,5 +12,8 @@ gemfile:
   - gemfiles/activesupport_5.0.gemfile
   - gemfiles/activesupport_5.1.gemfile
   - gemfiles/activesupport_5.2.gemfile
+script:
+  - bundle exec rubocop --config .rubocop.yml
+  - bundle exec rake test
 notifications:
   email: false
