@@ -3,3 +3,10 @@ inherit_from:
 
 AllCops:
   TargetRubyVersion: 2.3
+  Exclude:
+    - gemfiles/vendor/**/*
+
+Style/MethodCallWithArgsParentheses:
+  Exclude:
+    - Gemfile
+    - gemfiles/*

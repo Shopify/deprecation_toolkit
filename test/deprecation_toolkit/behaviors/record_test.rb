@@ -64,7 +64,7 @@ module DeprecationToolkit
         recorded = YAML.load_file("#{@deprecation_path}/deprecation_toolkit/behaviors/record_test.yml").fetch(name)
         triggered = deprecation_triggered.map { |msg| "DEPRECATION WARNING: #{msg}" }
 
-        assert_equal recorded, triggered
+        assert_equal(recorded, triggered)
       end
     end
   end

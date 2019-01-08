@@ -26,7 +26,7 @@ module DeprecationToolkit
       Configuration.warnings_treated_as_deprecation = [/#example is deprecated/]
 
       assert_raises Behaviors::DeprecationIntroduced do
-        Kernel.warn '#example is deprecated'
+        Kernel.warn('#example is deprecated')
 
         trigger_deprecation_toolkit_behavior
       end

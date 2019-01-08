@@ -20,7 +20,7 @@ module Minitest
         previous_behavior = DeprecationToolkit::Configuration.behavior
         Minitest.plugin_deprecation_toolkit_init(record_deprecations: true)
 
-        assert_equal DeprecationToolkit::Behaviors::Record, DeprecationToolkit::Configuration.behavior
+        assert_equal(DeprecationToolkit::Behaviors::Record, DeprecationToolkit::Configuration.behavior)
       ensure
         DeprecationToolkit::Configuration.behavior = previous_behavior
       end

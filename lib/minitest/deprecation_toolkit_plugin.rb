@@ -4,7 +4,7 @@ module Minitest
   extend self
 
   def plugin_deprecation_toolkit_options(opts, options)
-    opts.on "-r", "--record-deprecations", "Record deprecations" do
+    opts.on("-r", "--record-deprecations", "Record deprecations") do
       options[:record_deprecations] = true
     end
   end

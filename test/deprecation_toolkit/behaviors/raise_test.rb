@@ -71,7 +71,7 @@ module DeprecationToolkit
 
         old_allowed_deprecations = Configuration.allowed_deprecations
         Configuration.allowed_deprecations = [
-          ->(_, stack) { stack.first.to_s =~ /my_file\.rb/ }
+          ->(_, stack) { stack.first.to_s =~ /my_file\.rb/ },
         ]
 
         begin
@@ -86,7 +86,7 @@ module DeprecationToolkit
         super
         flunk if defined?(@expected_exception)
       rescue DeprecationIntroduced, DeprecationRemoved, DeprecationMismatch => e
-        assert_equal @expected_exception, e.class
+        assert_equal(@expected_exception, e.class)
       end
     end
   end
