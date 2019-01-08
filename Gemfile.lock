@@ -43,7 +43,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (~> 1.16)
+  bundler (>= 1.16)
   deprecation_toolkit!
   minitest (~> 5.0)
   rake
