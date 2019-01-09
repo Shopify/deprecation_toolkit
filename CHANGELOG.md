@@ -2,6 +2,11 @@
 
 ## master (unreleased)
 
+## 1.2.1 (2019-01-09)
+
+### Bug fixes
+* [#34](https://github.com/Shopify/deprecation_toolkit/pull/34): Fixes SystemStackError with RubyGems v3 and Ruby 2.5+. (@dylanahsmith)
+
 ## 1.2.0 (2018-11-28)
 
 ### New features
