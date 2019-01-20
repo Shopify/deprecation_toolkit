@@ -7,6 +7,7 @@ module DeprecationToolkit
   autoload :Configuration,             "deprecation_toolkit/configuration"
   autoload :Collector,                 "deprecation_toolkit/collector"
   autoload :ReadWriteHelper,           "deprecation_toolkit/read_write_helper"
+  autoload :TestTriggerer,             "deprecation_toolkit/test_triggerer"
 
   module Behaviors
     autoload :Disabled,                "deprecation_toolkit/behaviors/disabled"
@@ -33,5 +34,8 @@ module DeprecationToolkit
   end
 end
 
-require "deprecation_toolkit/minitest_hook"
+unless defined?(RSpec)
+  require "deprecation_toolkit/minitest_hook"
+end
+
 require "deprecation_toolkit/warning"

@@ -8,7 +8,7 @@ module DeprecationToolkit
   module ReadWriteHelper
     def read(test)
       deprecation_file = Bundler.root.join(recorded_deprecations_path(test))
-      YAML.load(deprecation_file.read).fetch(test.name, [])
+      YAML.load(deprecation_file.read).fetch(test_name(test), [])
     rescue Errno::ENOENT
       []
     end
@@ -17,11 +17,12 @@ module DeprecationToolkit
       create_deprecation_file(deprecation_file) unless deprecation_file.exist?
 
       content = YAML.load_file(deprecation_file)
-      deprecations_to_record.each do |test_name, deprecations|
+
+      deprecations_to_record.each do |test, deprecations|
         if deprecations.any?
-          content[test_name] = deprecations
+          content[test] = deprecations
         else
-          content.delete(test_name)
+          content.delete(test)
         end
       end
 
@@ -46,13 +47,28 @@ module DeprecationToolkit
         Configuration.deprecation_path
       end
 
-      Pathname(deprecation_folder).join("#{test.class.name.underscore}.yml")
+      path =
+        if DeprecationToolkit::Configuration.test_runner == :rspec
+          test.example_group.file_path.sub(%r{^./spec/}, "").sub(/_spec.rb$/, "")
+        else
+          test.class.name.underscore
+        end
+
+      Pathname(deprecation_folder).join("#{path}.yml")
     end
 
     def test_location(test)
-      test.method(test.name).source_location[0]
+      test.method(test_name(test)).source_location[0]
     rescue NameError
       "unknown"
+    end
+
+    def test_name(test)
+      if DeprecationToolkit::Configuration.test_runner == :rspec
+        "test_" + test.full_description.underscore.squish.tr(" ", "_")
+      else
+        test.name
+      end
     end
   end
 end

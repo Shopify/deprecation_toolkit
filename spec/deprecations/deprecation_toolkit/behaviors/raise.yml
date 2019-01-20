@@ -1,0 +1,12 @@
+---
+test_deprecation_toolkit/behaviors/raise_.trigger_raises_a_deprecation_removed_error_when_deprecations_are_removed:
+- 'DEPRECATION WARNING: Foo'
+- 'DEPRECATION WARNING: Bar'
+test_deprecation_toolkit/behaviors/raise_.trigger_raises_a_deprecation_removed_when_mismatched_and_less_than_expected:
+- 'DEPRECATION WARNING: A'
+- 'DEPRECATION WARNING: B'
+test_deprecation_toolkit/behaviors/raise_.trigger_raises_a_deprecation_mismatch_when_same_number_of_deprecations_are_triggered_with_mismatches:
+- 'DEPRECATION WARNING: C'
+test_deprecation_toolkit/behaviors/raise_.trigger_does_not_raise_when_deprecations_are_triggered_but_were_already_recorded:
+- 'DEPRECATION WARNING: Foo'
+- 'DEPRECATION WARNING: Bar'

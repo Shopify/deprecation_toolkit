@@ -114,6 +114,27 @@ a message in the console.
 Deprecation Toolkit allows you to configure which warnings should be treated as deprecations in order for you
 to keep track of them as if they were regular deprecations.
 
+
+## RSpec
+
+By default Deprecation Toolkit uses Minitest as its test runner. To use Deprecation Toolkit with RSpec you'll have to configure it.
+
+```ruby
+DeprecationToolkit::Configuration.test_runner = :rspec
+```
+
+Also make sure to require the before/after hooks in your `spec_helper.rb` or `rails_helper.rb`.
+
+```ruby
+require "deprecation_toolkit/rspec"
+```
+
+It's possible to record deprecations while running your specs by adding an ENV['DEPRECATION_BEHAVIOR'] variable to your test run. Run your specs with this ENV set to `"record-deprecations"`, `"record"` (or simply the `"r"` shortcut).
+
+```sh
+DEPRECATION_BEHAVIOR="record" bundle exec rspec path/to/file_spec.rb
+```
+
 ## License
 
 Deprecation Toolkit is licensed under the [MIT license](LICENSE.txt).
