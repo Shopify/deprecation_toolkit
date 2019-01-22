@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'deprecation_toolkit'
+
 module Minitest
   extend self
 
