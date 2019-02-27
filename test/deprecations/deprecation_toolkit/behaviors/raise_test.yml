@@ -10,3 +10,5 @@ test_.trigger_raises_a_DeprecationRemoved_when_less_deprecations_than_expected_a
 - 'DEPRECATION_WARNING: B'
 test_.trigger_raises_a_DeprecationMismatch_when_same_number_of_deprecations_are_triggered_with_mismatches:
 - 'DEPRECATION_WARNING: C'
+test_.trigger_does_not_raise_when_test_is_flaky:
+  - flaky: true

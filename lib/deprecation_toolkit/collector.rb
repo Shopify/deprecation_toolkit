@@ -59,5 +59,9 @@ module DeprecationToolkit
 
       difference
     end
+
+    def flaky?
+      size == 1 && deprecations.first['flaky'] == true
+    end
   end
 end
