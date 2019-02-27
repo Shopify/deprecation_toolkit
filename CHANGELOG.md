@@ -1,6 +1,7 @@
 # Change log
 
 ## master (unreleased)
+* [#38](https://github.com/Shopify/deprecation_toolkit/pull/38): Add a way to mark test as flaky. (@Edouard-chin)
 
 ## 1.2.1 (2019-01-09)
 

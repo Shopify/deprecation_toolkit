@@ -82,11 +82,18 @@ module DeprecationToolkit
         end
       end
 
+      test ".trigger does not raise when test is flaky" do
+        assert_nothing_raised do
+          ActiveSupport::Deprecation.warn("Foo")
+          ActiveSupport::Deprecation.warn("Bar")
+        end
+      end
+
       def trigger_deprecation_toolkit_behavior
         super
         flunk if defined?(@expected_exception)
       rescue DeprecationIntroduced, DeprecationRemoved, DeprecationMismatch => e
-        assert_equal(@expected_exception, e.class)
+        assert_equal(@expected_exception, e.class, e.message)
       end
     end
   end
