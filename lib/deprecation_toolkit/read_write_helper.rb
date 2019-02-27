@@ -7,21 +7,22 @@ require "yaml"
 module DeprecationToolkit
   module ReadWriteHelper
     def read(test)
-      deprecation_file = recorded_deprecations_path(test)
+      deprecation_file = Bundler.root.join(recorded_deprecations_path(test))
       YAML.load(deprecation_file.read).fetch(test.name, [])
     rescue Errno::ENOENT
       []
     end
 
-    def write(test, deprecations)
-      deprecation_file = recorded_deprecations_path(test)
+    def write(deprecation_file, deprecations_to_record)
       create_deprecation_file(deprecation_file) unless deprecation_file.exist?
 
       content = YAML.load_file(deprecation_file)
-      if deprecations.any?
-        content[test.name] = deprecations
-      else
-        content.delete(test.name)
+      deprecations_to_record.each do |test_name, deprecations|
+        if deprecations.any?
+          content[test_name] = deprecations
+        else
+          content.delete(test_name)
+        end
       end
 
       if content.any?
@@ -45,7 +46,7 @@ module DeprecationToolkit
         Configuration.deprecation_path
       end
 
-      Bundler.root.join(deprecation_folder, "#{test.class.name.underscore}.yml")
+      Pathname(deprecation_folder).join("#{test.class.name.underscore}.yml")
     end
 
     def test_location(test)

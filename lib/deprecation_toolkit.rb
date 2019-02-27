@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+load('tasks/ci_recorder.rake')
+
 module DeprecationToolkit
   autoload :DeprecationSubscriber,     "deprecation_toolkit/deprecation_subscriber"
   autoload :Configuration,             "deprecation_toolkit/configuration"
@@ -10,6 +12,7 @@ module DeprecationToolkit
     autoload :Disabled,                "deprecation_toolkit/behaviors/disabled"
     autoload :Raise,                   "deprecation_toolkit/behaviors/raise"
     autoload :Record,                  "deprecation_toolkit/behaviors/record"
+    autoload :CIRecordHelper,          "deprecation_toolkit/behaviors/ci_record_helper"
   end
 
   def self.add_notify_behavior
