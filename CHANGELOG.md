@@ -2,6 +2,9 @@
 
 ## master (unreleased)
 
+## 1.4.0 (2019-04-29)
+* [#37](https://github.com/Shopify/deprecation_toolkit/pull/37): Add Rspec support. (@andrewmarkle)
+
 ## 1.3.0 (2019-02-28)
 * [#38](https://github.com/Shopify/deprecation_toolkit/pull/38): Add a way to mark test as flaky. (@Edouard-chin)
 * [#39](https://github.com/Shopify/deprecation_toolkit/pull/39): Introduced a way to help recording massive amount of deprecations. (@Edouard-chin)
