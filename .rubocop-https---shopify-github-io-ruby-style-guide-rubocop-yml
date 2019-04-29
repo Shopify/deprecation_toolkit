@@ -4,6 +4,9 @@ AllCops:
   DisabledByDefault: true
   StyleGuideBaseURL: https://shopify.github.io/ruby-style-guide/
 
+Lint/AssignmentInCondition:
+  Enabled: true
+
 Layout/AccessModifierIndentation:
   EnforcedStyle: indent
   SupportedStyles:
@@ -329,18 +332,6 @@ Style/NumericLiteralPrefix:
 Style/ParenthesesAroundCondition:
   AllowSafeAssignment: true
 
-Style/PercentLiteralDelimiters:
-  PreferredDelimiters:
-    '%': '()'
-    '%i': '()'
-    '%q': '()'
-    '%Q': '()'
-    '%r': '{}'
-    '%s': '()'
-    '%w': '()'
-    '%W': '()'
-    '%x': '()'
-
 Style/PercentQLiterals:
   EnforcedStyle: lower_case_q
   SupportedStyles:
@@ -515,14 +506,6 @@ Naming/VariableName:
 
 Style/WhileUntilModifier:
   Enabled: true
-
-Style/WordArray:
-  EnforcedStyle: percent
-  SupportedStyles:
-  - percent
-  - brackets
-  MinSize: 0
-  WordRegex: !ruby/regexp /\A[\p{Word}\n\t]+\z/
 
 Metrics/BlockNesting:
   Max: 3
@@ -754,7 +737,7 @@ Style/EvenOdd:
 Layout/InitialIndentation:
   Enabled: true
 
-Style/FlipFlop:
+Lint/FlipFlop:
   Enabled: true
 
 Style/IfInsideElse:
@@ -785,9 +768,6 @@ Style/MethodMissingSuper:
   Enabled: true
 
 Style/MissingRespondToMissing:
-  Enabled: true
-
-Style/MultilineBlockChain:
   Enabled: true
 
 Layout/MultilineBlockLayout:
@@ -856,10 +836,16 @@ Style/RedundantParentheses:
 Style/RedundantSelf:
   Enabled: true
 
+Style/RedundantSortBy:
+  Enabled: true
+
 Layout/RescueEnsureAlignment:
   Enabled: true
 
 Style/RescueModifier:
+  Enabled: true
+
+Style/Sample:
   Enabled: true
 
 Style/SelfAssignment:
@@ -1107,28 +1093,16 @@ Performance/FixedSize:
 Performance/FlatMap:
   EnabledForFlattenWithoutParams: false
 
-Performance/LstripRstrip:
-  Enabled: true
-
 Performance/RangeInclude:
   Enabled: true
 
-Performance/RedundantBlockCall:
-  Enabled: true
-
 Performance/RedundantMatch:
-  Enabled: true
-
-Performance/RedundantSortBy:
   Enabled: true
 
 Performance/RegexpMatch:
   Enabled: true
 
 Performance/ReverseEach:
-  Enabled: true
-
-Performance/Sample:
   Enabled: true
 
 Performance/Size:
@@ -1141,6 +1115,9 @@ Performance/StartWith:
   Enabled: true
 
 Performance/StringReplacement:
+  Enabled: true
+
+Rails/ApplicationRecord:
   Enabled: true
 
 Rails/DelegateAllowBlank:
@@ -1170,6 +1147,9 @@ Security/Open:
   Enabled: true
 
 Lint/BigDecimalNew:
+  Enabled: true
+
+Style/Strip:
   Enabled: true
 
 Style/TrailingBodyOnClass:
