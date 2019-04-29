@@ -15,5 +15,6 @@ gemfile:
 script:
   - bundle exec rubocop --config .rubocop.yml
   - bundle exec rake test
+  - bundle exec rspec
 notifications:
   email: false

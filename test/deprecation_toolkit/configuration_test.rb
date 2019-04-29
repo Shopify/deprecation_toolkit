@@ -19,5 +19,9 @@ module DeprecationToolkit
     test ".attach_to is by default set to `rails`" do
       assert_equal [:rails], Configuration.attach_to
     end
+
+    test ".test_runner is by default set to `minitest`" do
+      assert_equal :minitest, Configuration.test_runner
+    end
   end
 end

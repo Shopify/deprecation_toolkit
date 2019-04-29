@@ -14,7 +14,7 @@ module DeprecationToolkit
 
         to_output = {
           filename.to_s => {
-            test.name => current_deprecations.deprecations_without_stacktrace,
+            test_name(test) => current_deprecations.deprecations_without_stacktrace,
           },
         }
 
