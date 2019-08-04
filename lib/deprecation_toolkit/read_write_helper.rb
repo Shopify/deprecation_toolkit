@@ -49,7 +49,7 @@ module DeprecationToolkit
 
       path =
         if DeprecationToolkit::Configuration.test_runner == :rspec
-          test.example_group.file_path.sub(%r{^./spec/}, "").sub(/_spec.rb$/, "")
+          test.location_rerun_argument.sub(%r{^./spec/}, "").sub(/_spec.rb:\d*$/, "")
         else
           test.class.name.underscore
         end

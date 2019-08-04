@@ -56,6 +56,8 @@ RSpec.describe(DeprecationToolkit::Behaviors::Record) do
     end.to(raise_error(Errno::ENOENT))
   end
 
+  include_examples "shared examples", "deprecation_toolkit/behaviors/record.yml"
+
   private
 
   def expect_deprecations_recorded(*deprecation_triggered, example)

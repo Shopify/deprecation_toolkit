@@ -5,6 +5,8 @@ require "deprecation_toolkit"
 require "deprecation_toolkit/rspec_plugin"
 require "active_support/all"
 
+Dir["./spec/support/**/*.rb"].sort.each { |f| require f }
+
 DeprecationToolkit::Configuration.test_runner = :rspec
 DeprecationToolkit::Configuration.deprecation_path = "spec/deprecations"
 ActiveSupport::Deprecation.behavior = :silence
