@@ -49,7 +49,7 @@ module DeprecationToolkit
 
       path =
         if DeprecationToolkit::Configuration.test_runner == :rspec
-          test.location_rerun_argument.sub(%r{^./spec/}, "").sub(/_spec.rb:\d*$/, "")
+          rspec_recorded_deprecations_path(test)
         else
           test.class.name.underscore
         end
@@ -68,6 +68,14 @@ module DeprecationToolkit
         "test_" + test.full_description.underscore.squish.tr(" ", "_")
       else
         test.name
+      end
+    end
+
+    def rspec_recorded_deprecations_path(test)
+      if DeprecationToolkit::Configuration.use_legacy_rspec_recorded_deprecations_path
+        test.example_group.file_path.sub(%r{^./spec/}, "").sub(/_spec.rb$/, "")
+      else
+        test.location_rerun_argument.sub(%r{^./spec/}, "").sub(/_spec.rb:\d*$/, "")
       end
     end
   end

@@ -23,5 +23,9 @@ module DeprecationToolkit
     test ".test_runner is by default set to `minitest`" do
       assert_equal :minitest, Configuration.test_runner
     end
+
+    test ".use_legacy_rspec_recorded_deprecations_path is by default set to `false`" do
+      assert_equal false, Configuration.use_legacy_rspec_recorded_deprecations_path
+    end
   end
 end

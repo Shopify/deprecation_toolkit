@@ -12,5 +12,6 @@ module DeprecationToolkit
     config_accessor(:deprecation_path) { "test/deprecations" }
     config_accessor(:test_runner) { :minitest }
     config_accessor(:warnings_treated_as_deprecation) { [] }
+    config_accessor(:use_legacy_rspec_recorded_deprecations_path) { false }
   end
 end
