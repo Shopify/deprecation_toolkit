@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'deprecation_toolkit'
-
 module Minitest
   extend self
 
@@ -12,11 +10,20 @@ module Minitest
   end
 
   def plugin_deprecation_toolkit_init(options)
+    return unless using_bundler?
+
+    require 'deprecation_toolkit'
     if options[:record_deprecations]
       DeprecationToolkit::Configuration.behavior = DeprecationToolkit::Behaviors::Record
     end
 
     DeprecationToolkit.add_notify_behavior
     DeprecationToolkit.attach_subscriber
+  end
+
+  private
+
+  def using_bundler?
+    ENV['BUNDLE_GEMFILE']
   end
 end
