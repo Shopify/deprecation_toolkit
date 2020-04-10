@@ -4,6 +4,32 @@ module DeprecationToolkit
   module Warning
     extend self
 
+    @buffer = nil
+
+    # Ruby 2.7 has a warning for improper use of keyword arguments that is sent as two parts
+    # Example:
+    # /path/to/caller.rb:1: warning: Using the last argument as keyword parameters is deprecated; \
+    # maybe ** should be added to the call
+    # /path/to/calleee.rb:1: warning: The called method `method_name' is defined here
+    def two_part_warning?(str)
+      str.end_with?("maybe ** should be added to the call\n")
+    end
+
+    def handle_multipart(str)
+      if @buffer
+        str = @buffer + str
+        @buffer = nil
+        return str
+      end
+
+      if two_part_warning?(str)
+        @buffer = str
+        return
+      end
+
+      str
+    end
+
     def deprecation_triggered?(str)
       DeprecationToolkit::Configuration.warnings_treated_as_deprecation.any? { |warning| warning =~ str }
     end
@@ -37,6 +63,9 @@ else
   module DeprecationToolkit
     module WarningPatch
       def warn(str)
+        str = DeprecationToolkit::Warning.handle_multipart(str)
+        return unless str
+
         if DeprecationToolkit::Warning.deprecation_triggered?(str)
           ActiveSupport::Deprecation.warn(str)
         else
