@@ -63,5 +63,22 @@ module DeprecationToolkit
         warn 'Test warn works correctly'
       end
     end
+
+    if RUBY_VERSION >= '2.5'
+      test 'Ruby 2.7 two-part keyword argument warning are joined together' do
+        Configuration.warnings_treated_as_deprecation = [/Using the last argument as keyword parameters/]
+
+        error = assert_raises Behaviors::DeprecationIntroduced do
+          warn "/path/to/caller.rb:1: warning: Using the last argument as keyword parameters is deprecated; " \
+            "maybe ** should be added to the call"
+          warn "/path/to/calleee.rb:1: warning: The called method `method_name' is defined here"
+
+          trigger_deprecation_toolkit_behavior
+        end
+
+        assert_match(/Using the last argument as keyword parameters/, error.message)
+        assert_match(/The called method/, error.message)
+      end
+    end
   end
 end
