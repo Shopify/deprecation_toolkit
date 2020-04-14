@@ -18,6 +18,8 @@ Gem::Specification.new do |spec|
   spec.metadata["source_code_uri"] = "https://github.com/shopify/deprecation_toolkit"
   spec.metadata["changelog_uri"] = "https://github.com/Shopify/deprecation_toolkit/blob/master/CHANGELOG.md"
 
+  spec.metadata['allowed_push_host'] = "https://rubygems.org"
+
   spec.required_ruby_version = '>= 2.3'
 
   spec.files = %x(git ls-files -z).split("\x0").reject do |f|
