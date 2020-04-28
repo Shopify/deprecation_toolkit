@@ -6,13 +6,20 @@ module DeprecationToolkit
 
     @buffer = nil
 
-    # Ruby 2.7 has a warning for improper use of keyword arguments that is sent as two parts
+    # Ruby 2.7 has two warning for improper use of keyword arguments that is sent as two parts
     # Example:
+    #
     # /path/to/caller.rb:1: warning: Using the last argument as keyword parameters is deprecated; \
     # maybe ** should be added to the call
     # /path/to/calleee.rb:1: warning: The called method `method_name' is defined here
+    #
+    # /path/to/caller.rb:1: warning: Passing the keyword argument as the last hash parameter is deprecated
+    # /path/to/calleee.rb:1: warning: The called method `method_name' is defined here
     def two_part_warning?(str)
-      str.end_with?("maybe ** should be added to the call\n")
+      str.end_with?(
+        "maybe ** should be added to the call\n",
+        "Passing the keyword argument as the last hash parameter is deprecated\n",
+      )
     end
 
     def handle_multipart(str)
