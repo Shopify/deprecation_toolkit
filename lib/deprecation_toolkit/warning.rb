@@ -6,7 +6,7 @@ module DeprecationToolkit
 
     @buffer = nil
 
-    # Ruby 2.7 has two warning for improper use of keyword arguments that is sent as two parts
+    # Ruby 2.7 has two warnings for improper use of keyword arguments that are sent in two parts
     # Example:
     #
     # /path/to/caller.rb:1: warning: Using the last argument as keyword parameters is deprecated; \
