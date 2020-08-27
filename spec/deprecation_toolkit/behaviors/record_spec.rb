@@ -10,6 +10,7 @@ RSpec.describe(DeprecationToolkit::Behaviors::Record) do
     @previous_behavior = DeprecationToolkit::Configuration.behavior
     DeprecationToolkit::Configuration.behavior = DeprecationToolkit::Behaviors::Record
     DeprecationToolkit::Configuration.deprecation_path = @deprecation_path
+    DeprecationToolkit::Configuration.project_root = '/Users/snehasomwanshi/dev/freeagent'
   end
 
   after do
@@ -22,6 +23,18 @@ RSpec.describe(DeprecationToolkit::Behaviors::Record) do
     expect_deprecations_recorded("Foo", "Bar", example) do
       ActiveSupport::Deprecation.warn("Foo")
       ActiveSupport::Deprecation.warn("Bar")
+
+      DeprecationToolkit::TestTriggerer.trigger_deprecation_toolkit_behavior(example)
+    end
+  end
+
+  it '.trigger should remove the rails app path from deprecation warning' do |example|
+    real_warning =  "DEPRECATION WARNING: /Users/snehasomwanshi/dev/freeagent/app/models/payroll/rti_submission.rb:20: warning: Passing the keyword argument as the last hash parameter is deprecated" \
+                    " /Users/snehasomwanshi/dev/freeagent/compartments/base_models/app/models/company.rb:120: warning: The called method `set_history_for' is defined here"
+    recorded_warning = "DEPRECATION WARNING: app/models/payroll/rti_submission.rb:20: warning: Passing the keyword argument as the last hash parameter is deprecated" \
+                       " compartments/base_models/app/models/company.rb:120: warning: The called method `set_history_for' is defined here"
+    expect_deprecations_recorded(recorded_warning, example) do
+      ActiveSupport::Deprecation.warn(real_warning)
 
       DeprecationToolkit::TestTriggerer.trigger_deprecation_toolkit_behavior(example)
     end
