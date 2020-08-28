@@ -11,6 +11,7 @@ RSpec.describe(DeprecationToolkit::Behaviors::Record) do
     DeprecationToolkit::Configuration.behavior = DeprecationToolkit::Behaviors::Record
     DeprecationToolkit::Configuration.deprecation_path = @deprecation_path
     DeprecationToolkit::Configuration.project_root = '/Users/snehasomwanshi/dev/freeagent'
+    DeprecationToolkit::Configuration.gem_home = '/Users/snehasomwanshi/.gem/ruby/2.7.1/gems'
   end
 
   after do
@@ -33,6 +34,18 @@ RSpec.describe(DeprecationToolkit::Behaviors::Record) do
                     " /Users/snehasomwanshi/dev/freeagent/compartments/base_models/app/models/company.rb:120: warning: The called method `set_history_for' is defined here"
     recorded_warning = "DEPRECATION WARNING: app/models/payroll/rti_submission.rb:20: warning: Passing the keyword argument as the last hash parameter is deprecated" \
                        " compartments/base_models/app/models/company.rb:120: warning: The called method `set_history_for' is defined here"
+    expect_deprecations_recorded(recorded_warning, example) do
+      ActiveSupport::Deprecation.warn(real_warning)
+
+      DeprecationToolkit::TestTriggerer.trigger_deprecation_toolkit_behavior(example)
+    end
+  end
+
+    it '.trigger should remove the gem home dir path from deprecation warning' do |example|
+    real_warning =  "DEPRECATION WARNING: /Users/snehasomwanshi/dev/freeagent/app/uploaders/attachment_attachment_uploader.rb:129: warning: Using the last argument as keyword parameters is deprecated; maybe ** should be added to the call" \
+                    " /Users/snehasomwanshi/.gem/ruby/2.7.1/gems/shrine-3.2.1/lib/shrine.rb:222: warning: The called method `generate_location' is defined here"
+    recorded_warning = "DEPRECATION WARNING: app/uploaders/attachment_attachment_uploader.rb:129: warning: Using the last argument as keyword parameters is deprecated; maybe ** should be added to the call" \
+                       " ~/.gem/ruby/2.7.1/gems/shrine-3.2.1/lib/shrine.rb:222: warning: The called method `generate_location' is defined here"
     expect_deprecations_recorded(recorded_warning, example) do
       ActiveSupport::Deprecation.warn(real_warning)
 

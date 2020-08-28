@@ -13,5 +13,6 @@ module DeprecationToolkit
     config_accessor(:test_runner) { :minitest }
     config_accessor(:warnings_treated_as_deprecation) { [] }
     config_accessor(:project_root) { '~/dev/freeagent' }
+    config_accessor(:gem_home) { '/home/ubuntu/.gems/ruby/2.7.1' }
   end
 end

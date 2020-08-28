@@ -35,12 +35,20 @@ module DeprecationToolkit
 
     def deprecations_without_stacktrace
       deprecations.map do |deprecation|
+        deprecation = make_paths_relative(deprecation)
         if ActiveSupport.gem_version.to_s < "5.0"
           deprecation.sub(/\W\s\(called from .*\)$/, "")
         else
           deprecation.sub(/ \(called from .*\)$/, "")
         end
       end
+    end
+
+    def make_paths_relative(deprecation)
+      gem_home = DeprecationToolkit::Configuration.gem_home
+      deprecation
+        .gsub(DeprecationToolkit::Configuration.project_root + '/', '')
+        .gsub(gem_home, '~/.gem' + gem_home.split('.gem').last)
     end
 
     def -(other)
