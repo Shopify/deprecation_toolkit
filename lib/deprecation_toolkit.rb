@@ -34,8 +34,7 @@ module DeprecationToolkit
   end
 end
 
-unless defined?(RSpec)
-  require "deprecation_toolkit/minitest_hook"
-end
+require "deprecation_toolkit/minitest_hook" unless defined? RSpec
+require "active_support"
 
 require "deprecation_toolkit/warning"
