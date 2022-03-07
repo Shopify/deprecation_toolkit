@@ -24,7 +24,7 @@ jobs:
         bundler-cache: true
 
     - name: RuboCop
-      run: bundle exec rubocop || true # Ignore failures until #56 fixes Rubocop config
+      run: bundle exec rubocop
 
     - name: Tests
       run: bundle exec rake test
