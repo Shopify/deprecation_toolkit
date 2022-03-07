@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 RSpec.describe(DeprecationToolkit::Behaviors::Raise) do
   before do
@@ -12,7 +12,7 @@ RSpec.describe(DeprecationToolkit::Behaviors::Raise) do
     DeprecationToolkit::Configuration.behavior = @previous_configuration
   end
 
-  it '.trigger noop any deprecations' do |example|
+  it ".trigger noop any deprecations" do |example|
     expect do
       ActiveSupport::Deprecation.warn("Foo")
       ActiveSupport::Deprecation.warn("Bar")

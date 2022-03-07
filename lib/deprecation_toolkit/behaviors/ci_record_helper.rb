@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-require 'json'
+require "json"
 
 module DeprecationToolkit
   module Behaviors
     class CIRecordHelper
       extend ReadWriteHelper
 
-      HEADER = '[DeprecationToolkit]'
+      HEADER = "[DeprecationToolkit]"
 
       def self.trigger(test, current_deprecations, _recorded_deprecations)
         filename = recorded_deprecations_path(test)

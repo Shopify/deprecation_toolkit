@@ -18,7 +18,7 @@ RSpec.describe(DeprecationToolkit::Behaviors::Record) do
     FileUtils.rm_rf(@deprecation_path)
   end
 
-  it '.trigger should record deprecations' do |example|
+  it ".trigger should record deprecations" do |example|
     expect_deprecations_recorded("Foo", "Bar", example) do
       ActiveSupport::Deprecation.warn("Foo")
       ActiveSupport::Deprecation.warn("Bar")

@@ -20,7 +20,7 @@ module DeprecationToolkit
       allowed_deprecations, procs = Configuration.allowed_deprecations.partition { |el| el.is_a?(Regexp) }
 
       allowed_deprecations.any? { |regex| regex =~ payload[:message] } ||
-      procs.any? { |proc| proc.call(payload[:message], payload[:callstack]) }
+        procs.any? { |proc| proc.call(payload[:message], payload[:callstack]) }
     end
   end
 end

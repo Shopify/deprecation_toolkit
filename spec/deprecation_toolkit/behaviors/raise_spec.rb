@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 RSpec.describe(DeprecationToolkit::Behaviors::Raise) do
   before do
@@ -29,7 +29,7 @@ RSpec.describe(DeprecationToolkit::Behaviors::Raise) do
     end.to(raise_error(DeprecationToolkit::Behaviors::DeprecationRemoved))
   end
 
-  it '.trigger raises a DeprecationRemoved when mismatched and less than expected' do |example|
+  it ".trigger raises a DeprecationRemoved when mismatched and less than expected" do |example|
     expect do
       ActiveSupport::Deprecation.warn("C")
 
@@ -37,7 +37,7 @@ RSpec.describe(DeprecationToolkit::Behaviors::Raise) do
     end.to(raise_error(DeprecationToolkit::Behaviors::DeprecationRemoved))
   end
 
-  it '.trigger raises a DeprecationMismatch when same number of deprecations are triggered with mismatches' do |example|
+  it ".trigger raises a DeprecationMismatch when same number of deprecations are triggered with mismatches" do |example|
     expect do
       ActiveSupport::Deprecation.warn("A")
 
@@ -69,7 +69,7 @@ RSpec.describe(DeprecationToolkit::Behaviors::Raise) do
   end
 
   it ".trigger does not raise when deprecations are allowed with Procs" do |example|
-    class_eval <<-RUBY, 'my_file.rb', 1337
+    class_eval <<-RUBY, "my_file.rb", 1337
       def deprecation_caller
         deprecation_callee
       end
