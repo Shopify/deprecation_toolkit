@@ -63,12 +63,11 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (>= 1.16)
+  bundler
   deprecation_toolkit!
-  minitest (~> 5.0)
+  minitest
   rake
-  rspec (~> 3.0)
-  rubocop
+  rspec
   rubocop-shopify
 
 BUNDLED WITH

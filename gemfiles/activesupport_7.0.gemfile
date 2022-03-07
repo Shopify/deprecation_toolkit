@@ -1,12 +1,5 @@
 # frozen_string_literal: true
 
-source "https://rubygems.org"
+@activesupport_gem_requirement = "~> 7.0"
 
-gem "activesupport", "~> 7.0"
-
-group :deployment do
-  gem "rake"
-  gem "rubocop"
-end
-
-gemspec path: "../"
+eval_gemfile "../Gemfile"
