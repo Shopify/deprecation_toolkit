@@ -61,7 +61,7 @@ module DeprecationToolkit
     end
 
     def flaky?
-      size == 1 && deprecations.first['flaky'] == true
+      size == 1 && deprecations.first["flaky"] == true
     end
   end
 end

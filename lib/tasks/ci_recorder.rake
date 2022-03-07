@@ -1,20 +1,20 @@
 # frozen_string_literal: true
 
-require 'tempfile'
-require 'json'
-require 'active_support/core_ext/hash'
-require 'rake'
-require_relative '../deprecation_toolkit/read_write_helper'
+require "tempfile"
+require "json"
+require "active_support/core_ext/hash"
+require "rake"
+require_relative "../deprecation_toolkit/read_write_helper"
 
 class CIRecorder
   include Rake::DSL
   include DeprecationToolkit::ReadWriteHelper
 
   def initialize
-    namespace :deprecation_toolkit do
-      desc 'Parse a file generated with the CIOutputHelper and generate deprecations out of it'
-      task :record_from_ci_output do
-        raw_file = ENV.fetch('FILEPATH')
+    namespace(:deprecation_toolkit) do
+      desc("Parse a file generated with the CIOutputHelper and generate deprecations out of it")
+      task(:record_from_ci_output) do
+        raw_file = ENV.fetch("FILEPATH")
 
         deprecations = extract_deprecations_output(raw_file) do |file|
           parse_file(file)
@@ -32,6 +32,7 @@ class CIRecorder
     shell_command = "cat #{file} | sed -n -e 's/^.* \\[DeprecationToolkit\\] \\(.*\\)/\\1/p' > #{tmp_file.path}"
 
     raise "Couldn't extract deprecations from output" unless system(shell_command)
+
     yield(tmp_file)
   ensure
     tmp_file.delete

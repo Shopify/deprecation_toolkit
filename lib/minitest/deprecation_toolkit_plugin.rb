@@ -12,7 +12,7 @@ module Minitest
   def plugin_deprecation_toolkit_init(options)
     return unless using_bundler?
 
-    require 'deprecation_toolkit'
+    require "deprecation_toolkit"
     if options[:record_deprecations]
       DeprecationToolkit::Configuration.behavior = DeprecationToolkit::Behaviors::Record
     end
@@ -24,6 +24,6 @@ module Minitest
   private
 
   def using_bundler?
-    ENV['BUNDLE_GEMFILE']
+    ENV["BUNDLE_GEMFILE"]
   end
 end

@@ -27,13 +27,13 @@ module DeprecationToolkit
         ActiveSupport::Deprecation.warn("Foo")
       end
 
-      test '.trigger raises a DeprecationRemoved when less deprecations than expected are triggerd and mismatches' do
+      test ".trigger raises a DeprecationRemoved when less deprecations than expected are triggerd and mismatches" do
         @expected_exception = DeprecationRemoved
 
         ActiveSupport::Deprecation.warn("C")
       end
 
-      test '.trigger raises a DeprecationMismatch when same number of deprecations are triggered with mismatches' do
+      test ".trigger raises a DeprecationMismatch when same number of deprecations are triggered with mismatches" do
         @expected_exception = DeprecationMismatch
 
         ActiveSupport::Deprecation.warn("A")
@@ -59,7 +59,7 @@ module DeprecationToolkit
       end
 
       test ".trigger does not raise when deprecations are allowed with Procs" do
-        class_eval <<-RUBY, 'my_file.rb', 1337
+        class_eval <<-RUBY, "my_file.rb", 1337
           def deprecation_caller
             deprecation_callee
           end

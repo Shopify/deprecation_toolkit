@@ -45,7 +45,7 @@ end
 
 # Warning is a new feature in ruby 2.5, so support older versions
 # Note that the `Warning` module exists in Ruby 2.4 but has a bug https://bugs.ruby-lang.org/issues/12944
-if RUBY_VERSION < '2.5.0' && RUBY_ENGINE == 'ruby'
+if RUBY_VERSION < "2.5.0" && RUBY_ENGINE == "ruby"
   module Kernel
     class << self
       alias_method :__original_warn, :warn

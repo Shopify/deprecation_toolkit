@@ -12,31 +12,31 @@ module DeprecationToolkit
       Configuration.warnings_treated_as_deprecation = @previous_warnings_treated_as_deprecation
     end
 
-    test 'treats warnings as deprecations' do
+    test "treats warnings as deprecations" do
       Configuration.warnings_treated_as_deprecation = [/#example is deprecated/]
 
       assert_raises Behaviors::DeprecationIntroduced do
-        warn '#example is deprecated'
+        warn "#example is deprecated"
 
         trigger_deprecation_toolkit_behavior
       end
     end
 
-    test 'Kernel.warn treats warnings as deprecations ' do
+    test "Kernel.warn treats warnings as deprecations " do
       Configuration.warnings_treated_as_deprecation = [/#example is deprecated/]
 
       assert_raises Behaviors::DeprecationIntroduced do
-        Kernel.warn('#example is deprecated')
+        Kernel.warn("#example is deprecated")
 
         trigger_deprecation_toolkit_behavior
       end
     end
 
-    test 'warn can be called with an array' do
+    test "warn can be called with an array" do
       Configuration.warnings_treated_as_deprecation = [/#example is deprecated/, /#something is deprecated/]
 
-      error = assert_raises Behaviors::DeprecationIntroduced do
-        warn ['#example is deprecated', '#something is deprecated']
+      error = assert_raises(Behaviors::DeprecationIntroduced) do
+        warn(["#example is deprecated", "#something is deprecated"])
 
         trigger_deprecation_toolkit_behavior
       end
@@ -45,11 +45,11 @@ module DeprecationToolkit
       assert_match(/#something is deprecated/, error.message)
     end
 
-    test 'warn can be called with multiple arguments' do
+    test "warn can be called with multiple arguments" do
       Configuration.warnings_treated_as_deprecation = [/#example is deprecated/, /#something is deprecated/]
 
-      error = assert_raises Behaviors::DeprecationIntroduced do
-        warn '#example is deprecated', '#something is deprecated'
+      error = assert_raises(Behaviors::DeprecationIntroduced) do
+        warn("#example is deprecated", "#something is deprecated")
 
         trigger_deprecation_toolkit_behavior
       end
@@ -58,20 +58,20 @@ module DeprecationToolkit
       assert_match(/#something is deprecated/, error.message)
     end
 
-    test 'warn works as usual when no warnings are treated as deprecation' do
+    test "warn works as usual when no warnings are treated as deprecation" do
       assert_nothing_raised do
-        warn 'Test warn works correctly'
+        warn "Test warn works correctly"
       end
     end
 
-    if RUBY_VERSION >= '2.5'
-      test 'Ruby 2.7 two-part keyword argument warning are joined together' do
+    if RUBY_VERSION >= "2.5"
+      test "Ruby 2.7 two-part keyword argument warning are joined together" do
         Configuration.warnings_treated_as_deprecation = [/Using the last argument as keyword parameters/]
 
-        error = assert_raises Behaviors::DeprecationIntroduced do
-          warn "/path/to/caller.rb:1: warning: Using the last argument as keyword parameters is deprecated; " \
-            "maybe ** should be added to the call"
-          warn "/path/to/calleee.rb:1: warning: The called method `method_name' is defined here"
+        error = assert_raises(Behaviors::DeprecationIntroduced) do
+          warn("/path/to/caller.rb:1: warning: Using the last argument as keyword parameters is deprecated; " \
+            "maybe ** should be added to the call")
+          warn("/path/to/calleee.rb:1: warning: The called method `method_name' is defined here")
 
           trigger_deprecation_toolkit_behavior
         end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-load('tasks/ci_recorder.rake')
+load("tasks/ci_recorder.rake")
 
 module DeprecationToolkit
   autoload :DeprecationSubscriber,     "deprecation_toolkit/deprecation_subscriber"

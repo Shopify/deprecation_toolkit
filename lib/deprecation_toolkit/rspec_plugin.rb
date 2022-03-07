@@ -4,7 +4,7 @@ module DeprecationToolkit
   module RSpecPlugin
     RSpec.configure do |config|
       config.before(:suite) do
-        case ENV['DEPRECATION_BEHAVIOR']
+        case ENV["DEPRECATION_BEHAVIOR"]
         when "r", "record", "record-deprecations"
           DeprecationToolkit::Configuration.behavior = DeprecationToolkit::Behaviors::Record
         end
