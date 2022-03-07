@@ -8,3 +8,7 @@ group :deployment do
   gem 'rake'
   gem 'rubocop'
 end
+
+group :test do
+  gem "rubocop-shopify"
+end

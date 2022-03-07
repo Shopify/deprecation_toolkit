@@ -50,6 +50,8 @@ GEM
       unicode-display_width (>= 1.4.0, < 3.0)
     rubocop-ast (1.16.0)
       parser (>= 3.1.1.0)
+    rubocop-shopify (2.5.0)
+      rubocop (~> 1.25)
     ruby-progressbar (1.11.0)
     thread_safe (0.3.6)
     tzinfo (1.2.7)
@@ -67,6 +69,7 @@ DEPENDENCIES
   rake
   rspec (~> 3.0)
   rubocop
+  rubocop-shopify
 
 BUNDLED WITH
    2.2.22
