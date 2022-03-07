@@ -114,6 +114,11 @@ a message in the console.
 Deprecation Toolkit allows you to configure which warnings should be treated as deprecations in order for you
 to keep track of them as if they were regular deprecations.
 
+This setting accepts an array of regular expressions. To match on all warnings, you can provide a empty regex:
+
+```ruby
+DeprecationToolkit::Configuration.warnings_treated_as_deprecation = [//]
+```
 
 ## RSpec
 
