@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "active_support"
+
 load("tasks/ci_recorder.rake")
 
 module DeprecationToolkit
@@ -35,6 +37,4 @@ module DeprecationToolkit
 end
 
 require "deprecation_toolkit/minitest_hook" unless defined? RSpec
-require "active_support"
-
 require "deprecation_toolkit/warning"
