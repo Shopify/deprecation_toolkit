@@ -1,6 +1,9 @@
 # Change log
 
-## master (unreleased)
+## main (unreleased)
+
+* [#58](https://github.com/Shopify/deprecation_toolkit/pull/58): Drop support for Ruby < 2.6 & Active Support < 5.2. (@sambostock)
+* [#58](https://github.com/Shopify/deprecation_toolkit/pull/58): Ensure compatibility with Rails 7. (@sambostock)
 
 ## 1.4.0 (2019-04-29)
 * [#37](https://github.com/Shopify/deprecation_toolkit/pull/37): Add Rspec support. (@andrewmarkle)
