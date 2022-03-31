@@ -2,6 +2,8 @@
 
 ## main (unreleased)
 
+* [#60](https://github.com/Shopify/deprecation_toolkit/pull/60): Normalize paths in deprecation messages. (@sambostock)
+
 ## 2.0.0 (2022-03-16)
 
 * [#58](https://github.com/Shopify/deprecation_toolkit/pull/58): Drop support for Ruby < 2.6 & Active Support < 5.2. (@sambostock)

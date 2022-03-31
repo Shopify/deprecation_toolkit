@@ -9,18 +9,24 @@ module DeprecationToolkit
     end
 
     def deprecation(event)
-      message = event.payload[:message]
+      message = normalize_message(event.payload[:message])
 
-      Collector.collect(message) unless deprecation_allowed?(event.payload)
+      Collector.collect(message) unless deprecation_allowed?(message, event.payload[:callstack])
     end
 
     private
 
-    def deprecation_allowed?(payload)
+    def deprecation_allowed?(message, callstack)
       allowed_deprecations, procs = Configuration.allowed_deprecations.partition { |el| el.is_a?(Regexp) }
 
-      allowed_deprecations.any? { |regex| regex =~ payload[:message] } ||
-        procs.any? { |proc| proc.call(payload[:message], payload[:callstack]) }
+      allowed_deprecations.any? { |regex| regex =~ message } ||
+        procs.any? { |proc| proc.call(message, callstack) }
+    end
+
+    def normalize_message(message)
+      Configuration
+        .message_normalizers
+        .reduce(message) { |message, normalizer| normalizer.call(message) }
     end
   end
 end
