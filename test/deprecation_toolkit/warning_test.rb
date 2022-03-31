@@ -59,9 +59,13 @@ module DeprecationToolkit
     end
 
     test "warn works as usual when no warnings are treated as deprecation" do
-      assert_nothing_raised do
-        warn "Test warn works correctly"
+      std_out, stderr = capture_io do
+        assert_nothing_raised do
+          warn("Test warn works correctly")
+        end
       end
+      assert_empty std_out
+      assert_equal "Test warn works correctly\n", stderr
     end
 
     test "Ruby 2.7 two-part keyword argument warning are joined together" do
