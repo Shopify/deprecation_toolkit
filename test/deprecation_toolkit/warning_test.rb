@@ -181,6 +181,11 @@ module DeprecationToolkit
 
     test "Gem paths are normalized in deprecation messages" do
       paths = Gem.path
+      puts
+      puts
+      pp paths # TODO: Remove this (debugging CI)
+      puts
+      puts
       assert_normalizes(
         from: paths.map.with_index { |path, index| "#{path}/file-#{index}" }.join("\n"),
         to: Array.new(paths.length) { |index| "<GEM_PATH>/file-#{index}" }.join("\n"),
