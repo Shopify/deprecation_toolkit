@@ -8,6 +8,7 @@ module DeprecationToolkit
   autoload :DeprecationSubscriber,     "deprecation_toolkit/deprecation_subscriber"
   autoload :Configuration,             "deprecation_toolkit/configuration"
   autoload :Collector,                 "deprecation_toolkit/collector"
+  autoload :PathPrefixNormalizer,      "deprecation_toolkit/path_prefix_normalizer"
   autoload :ReadWriteHelper,           "deprecation_toolkit/read_write_helper"
   autoload :TestTriggerer,             "deprecation_toolkit/test_triggerer"
 
