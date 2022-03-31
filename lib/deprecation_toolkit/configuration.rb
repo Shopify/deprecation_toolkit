@@ -18,6 +18,7 @@ module DeprecationToolkit
 
       normalizers << PathPrefixNormalizer.new(Rails.root) if defined?(Rails)
       normalizers << PathPrefixNormalizer.new(Bundler.root) if defined?(Bundler)
+      normalizers << PathPrefixNormalizer.new(Dir.pwd)
 
       if defined?(Gem)
         Gem.loaded_specs.each_value do |spec|
@@ -37,8 +38,6 @@ module DeprecationToolkit
       rescue LoadError
         # skip normalizing ruby internal paths
       end
-
-      normalizers << PathPrefixNormalizer.new(Dir.pwd)
 
       normalizers
     end
