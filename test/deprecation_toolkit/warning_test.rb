@@ -183,6 +183,8 @@ module DeprecationToolkit
       paths = Gem.path
       puts
       puts
+      pp Configuration.message_normalizers
+      puts
       pp paths # TODO: Remove this (debugging CI)
       puts
       puts
