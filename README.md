@@ -9,7 +9,7 @@ Fixing all deprecations at once might be tough depending on the size of your app
 
 ## How it works
 
-The Deprecation Toolkit gem works by using a [shitlist approach](https://confreaks.tv/videos/reddotrubyconf2017-shitlist-driven-development-and-other-tricks-for-working-on-large-codebases).
+The Deprecation Toolkit gem works by using a [shitlist approach](https://www.youtube.com/watch?v=20pj_ajDBOg).
 First, the gem records all existing deprecations into `.yml` files. When running a test that have non-recorded deprecations after the initial recording, Deprecation Toolkit triggers a behavior of your choice (by default it raises an error).
 
 ## Recording Deprecations
