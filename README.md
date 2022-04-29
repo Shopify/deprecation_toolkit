@@ -6,7 +6,6 @@ Deprecation Toolkit is a gem that helps you get rid of deprecations in your code
 Having deprecations in your application usually means that something will break whenever you upgrade third-party dependencies. The sooner the better to fix them!
 Fixing all deprecations at once might be tough depending on the size of your app and the number of deprecations. You might have to progressively resolve them while making sure your team doesn't add new ones. This is where this gem comes handy!
 
-
 ## How it works
 
 The Deprecation Toolkit gem works by using a [shitlist approach](https://confreaks.tv/videos/reddotrubyconf2017-shitlist-driven-development-and-other-tricks-for-working-on-large-codebases).
@@ -44,15 +43,13 @@ end
 
 Behaviors define what happens when non-recorded deprecations are encountered.
 
-Behaviors are classes that have a `.trigger` class method.
-
-This gem provides 3 behaviors, the default one being `DeprecationToolkit::Behaviors::Raise`.
+This gem provides 4 behaviors, the default one being `DeprecationToolkit::Behaviors::Raise`.
 
 * `DeprecationToolkit::Behaviors::Raise` will raise either:
   - `DeprecationToolkit::DeprecationIntroduced` error if a new deprecation is introduced.
   - `DeprecationToolkit::DeprecationRemoved` error if a deprecation was removed (compare to the one recorded in the shitlist).
 * `DeprecationToolkit::Behaviors::Record` will record deprecations.
-* `DeprecationToolkit::Behaviors::CIRecordHelper` See separated explanation below.
+* `DeprecationToolkit::Behaviors::CIRecordHelper` See separate explanation below.
 * `DeprecationToolkit::Behaviors::Disabled` will do nothing.
   - This is useful if you want to disable this gem for a moment without removing the gem from your Gemfile.
 
@@ -72,7 +69,7 @@ end
 DeprecationToolkit::Configuration.behavior = StatsdBehavior
 ```
 
-##### DeprecationToolkit::Behaviors::CIRecordHelper
+#### DeprecationToolkit::Behaviors::CIRecordHelper
 
 This is a special type of behaviour meant to help you record deprecations if you have a lof of them.
 Imagine if you have thousands of tests and need to record deprecations for each on your machine, this is going to take ages.
