@@ -49,8 +49,8 @@ Behaviors are classes that have a `.trigger` class method.
 This gem provides 3 behaviors, the default one being `DeprecationToolkit::Behaviors::Raise`.
 
 * `DeprecationToolkit::Behaviors::Raise` will raise either:
-  - `DeprecationToolkit::DeprecationIntroduced` error if a new deprecation is introduced.
-  - `DeprecationToolkit::DeprecationRemoved` error if a deprecation was removed (compare to the one recorded in the shitlist).
+  - `DeprecationToolkit::Behaviors::DeprecationIntroduced` error if a new deprecation is introduced.
+  - `DeprecationToolkit::Behaviors::DeprecationRemoved` error if a deprecation was removed (compare to the one recorded in the shitlist).
 * `DeprecationToolkit::Behaviors::Record` will record deprecations.
 * `DeprecationToolkit::Behaviors::CIRecordHelper` See separated explanation below.
 * `DeprecationToolkit::Behaviors::Disabled` will do nothing.
