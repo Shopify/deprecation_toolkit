@@ -60,7 +60,9 @@ module DeprecationToolkit
 
     test "warn works as usual when no warnings are treated as deprecation" do
       assert_nothing_raised do
-        warn "Test warn works correctly"
+        capture_io do
+          warn "Test warn works correctly"
+        end
       end
     end
 
