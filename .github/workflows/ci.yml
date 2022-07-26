@@ -31,6 +31,7 @@ jobs:
 
     - name: RuboCop
       run: bundle exec rubocop
+      if: ${{ matrix.ruby != '2.6' }}
 
     - name: Tests
       run: bundle exec rake test
