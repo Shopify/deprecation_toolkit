@@ -3,7 +3,7 @@ name: CI
 on: [push, pull_request]
 
 jobs:
-  build:
+  functionality:
     runs-on: ubuntu-latest
     name: Ruby ${{ matrix.ruby }} / ${{ matrix.gemfile }}
     strategy:
@@ -29,11 +29,22 @@ jobs:
         ruby-version: ${{ matrix.ruby }}
         bundler-cache: true
 
-    - name: RuboCop
-      run: bundle exec rubocop
-
     - name: Tests
       run: bundle exec rake test
 
     - name: Specs
       run: bundle exec rspec
+  style:
+    runs-on: ubuntu-latest
+    name: Rubocop
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v3
+
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: "3.1"
+        bundler-cache: true
+
+    - name: RuboCop
+      run: bundle exec rubocop
