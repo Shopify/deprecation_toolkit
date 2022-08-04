@@ -117,6 +117,38 @@ This setting accepts an array of regular expressions. To match on all warnings, 
 DeprecationToolkit::Configuration.warnings_treated_as_deprecation = [//]
 ```
 
+### 🔨 `#DeprecationToolkit::Configuration#message_normalizers`
+
+Deprecation Toolkit allows the normalization of deprecation warnings by registering message normalizers.
+
+Out-of-the-box, various path normalizers are included, to ensure that any paths included in deprecation warnings are consistent from machine to machine (see [`lib/deprecation_toolkit/configuration.rb`](lib/deprecation_toolkit/configuration.rb) for details).
+
+### Customizing normalization
+
+Additional normalizers can be added by appending then to the array:
+
+```ruby
+DeprecationToolkit::Configuration.message_normalizers << ->(msg) { msg.downcase }
+```
+
+Normalizers are expected to respond to `.call`, accepting a `String` and returning a normalized `String`, and are applied in order of registration.
+
+If you wish to normalize a custom path, you can create your own `DeprecationToolkit::PathPrefixNormalizer`:
+
+```ruby
+DeprecationToolkit::Configuration.message_normalizers <<
+  DeprecationToolkit::PathPrefixNormalizer.new(
+    '/path/to/something',
+    replacement: 'optional replacement string',
+  )
+```
+
+You may optionally disable any or all normalizers by mutating or replacing the array.
+
+```ruby
+DeprecationToolkit::Configuration.message_normalizers = [] # remove all normalizers
+```
+
 ## RSpec
 
 By default Deprecation Toolkit uses Minitest as its test runner. To use Deprecation Toolkit with RSpec you'll have to configure it.

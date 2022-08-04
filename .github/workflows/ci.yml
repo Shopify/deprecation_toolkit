@@ -7,6 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Ruby ${{ matrix.ruby }} / ${{ matrix.gemfile }}
     strategy:
+      fail-fast: false
       matrix:
         gemfile: [gemfiles/activesupport_5.2.gemfile, gemfiles/activesupport_6.0.gemfile, gemfiles/activesupport_6.1.gemfile, gemfiles/activesupport_7.0.gemfile, gemfiles/activesupport_edge.gemfile]
         ruby: ["2.6", "2.7", "3.0", "3.1"]
