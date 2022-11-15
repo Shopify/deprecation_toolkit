@@ -8,3 +8,6 @@ require "active_support/all"
 
 ActiveSupport::Deprecation.behavior = :silence
 ActiveSupport::TestCase.test_order = :random
+
+module Rails
+end

@@ -13,6 +13,7 @@ module Minitest
     return unless using_bundler?
 
     require "deprecation_toolkit"
+
     if options[:record_deprecations]
       DeprecationToolkit::Configuration.behavior = DeprecationToolkit::Behaviors::Record
     end
