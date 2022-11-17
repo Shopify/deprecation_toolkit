@@ -18,20 +18,35 @@ module DeprecationToolkit
     autoload :CIRecordHelper,          "deprecation_toolkit/behaviors/ci_record_helper"
   end
 
-  def self.add_notify_behavior
-    notify = ActiveSupport::Deprecation::DEFAULT_BEHAVIORS[:notify]
-    behaviors = ActiveSupport::Deprecation.behavior
+  class << self
+    def add_notify_behavior
+      notify = ActiveSupport::Deprecation::DEFAULT_BEHAVIORS[:notify]
 
-    unless behaviors.find { |behavior| behavior == notify }
-      ActiveSupport::Deprecation.behavior = behaviors << notify
+      each_deprecator do |deprecator|
+        behaviors = deprecator.behavior
+
+        unless behaviors.find { |behavior| behavior == notify }
+          deprecator.behavior = (behaviors << notify)
+        end
+      end
     end
-  end
 
-  def self.attach_subscriber
-    return if DeprecationSubscriber.already_attached?
+    def attach_subscriber
+      return if DeprecationSubscriber.already_attached?
 
-    Configuration.attach_to.each do |gem_name|
-      DeprecationSubscriber.attach_to(gem_name)
+      Configuration.attach_to.each do |gem_name|
+        DeprecationSubscriber.attach_to(gem_name)
+      end
+    end
+
+    private
+
+    def each_deprecator(&block)
+      if defined?(Rails.application) && Rails.application.respond_to?(:deprecators)
+        Rails.application.deprecators.each(&block)
+      else
+        block.call(ActiveSupport::Deprecation)
+      end
     end
   end
 end

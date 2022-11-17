@@ -5,6 +5,31 @@ require "optparse"
 
 module Minitest
   class DeprecationToolkitPluginTest < ActiveSupport::TestCase
+    class FakeApplication
+      class Deprecator
+        def behavior
+          @behavior ||= []
+        end
+
+        attr_writer :behavior
+      end
+
+      class Deprecatiors < Array
+        def initialize(number)
+          super()
+          number.times { self << Deprecator.new }
+        end
+
+        def behaviour=(value)
+          each { |deprecator| deprecator.behaviour = value }
+        end
+      end
+
+      def deprecators
+        @deprecators ||= Deprecatiors.new(3)
+      end
+    end
+
     test ".plugin_deprecation_toolkit_options when running test with the `-r` flag" do
       option_parser = OptionParser.new
       options = {}
@@ -28,6 +53,21 @@ module Minitest
       behavior = ActiveSupport::Deprecation::DEFAULT_BEHAVIORS[:notify]
 
       assert_includes ActiveSupport::Deprecation.behavior, behavior
+    end
+
+    test ".plugin_deprecation_toolkit_init add `notify` behavior to the deprecations behavior list with Rails.application.deprecators" do
+      behavior = ActiveSupport::Deprecation::DEFAULT_BEHAVIORS[:notify]
+
+      Rails.singleton_class.define_method(:application) { @application ||= FakeApplication.new }
+
+      Minitest.plugin_deprecation_toolkit_init({})
+
+      Rails.application.deprecators.each do |deprecator|
+        assert_includes(deprecator.behavior, behavior)
+      end
+
+    ensure
+      Rails.singleton_class.undef_method(:application)
     end
 
     test ".plugin_deprecation_toolkit_init doesn't remove previous deprecation behaviors" do
