@@ -1,21 +1,21 @@
 PATH
   remote: .
   specs:
-    deprecation_toolkit (2.0.0)
+    deprecation_toolkit (2.0.1)
       activesupport (>= 5.2)
 
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (7.0.2.3)
+    activesupport (7.0.4)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
     ast (2.4.2)
-    concurrent-ruby (1.1.9)
+    concurrent-ruby (1.1.10)
     diff-lcs (1.5.0)
-    i18n (1.10.0)
+    i18n (1.12.0)
       concurrent-ruby (~> 1.0)
     minitest (5.15.0)
     parallel (1.21.0)
@@ -52,7 +52,7 @@ GEM
     rubocop-shopify (2.5.0)
       rubocop (~> 1.25)
     ruby-progressbar (1.11.0)
-    tzinfo (2.0.4)
+    tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.1.0)
 

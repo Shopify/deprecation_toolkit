@@ -2,6 +2,10 @@
 
 ## main (unreleased)
 
+## 2.0.1 (2022-11-18)
+
+* [#74](https://github.com/Shopify/deprecation_toolkit/pull/74): Add support for `Rails.application.deprecators`. (@gmcgibbon)
+
 ## 2.0.0 (2022-03-16)
 
 * [#58](https://github.com/Shopify/deprecation_toolkit/pull/58): Drop support for Ruby < 2.6 & Active Support < 5.2. (@sambostock)
