@@ -58,7 +58,7 @@ module DeprecationToolkit
     end
 
     def test_location(test)
-      test.method(test_name(test)).source_location[0]
+      Kernel.const_source_location(test.class.name)[0]
     rescue NameError
       "unknown"
     end
