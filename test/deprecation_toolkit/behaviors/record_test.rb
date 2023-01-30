@@ -29,6 +29,30 @@ module DeprecationToolkit
         end
       end
 
+      test ".trigger record deprecations for proc path" do
+        Configuration.deprecation_path = proc do
+          File.join(@deprecation_path, "prefix")
+        end
+
+        assert_deprecations_recorded("Foo", to: "#{@deprecation_path}/prefix") do
+          ActiveSupport::Deprecation.warn("Foo")
+
+          trigger_deprecation_toolkit_behavior
+        end
+      end
+
+      class_eval(<<~RUBY, "some_other_file.rb", 1)
+        test ".trigger record deprecations for proc path with correct test location" do
+          Configuration.deprecation_path = proc do |test_location|
+            assert_match(%r(test/deprecation_toolkit/behaviors/record_test.rb), test_location)
+
+            @deprecation_path
+          end
+
+          trigger_deprecation_toolkit_behavior
+        end
+      RUBY
+
       test ".trigger re-record an existing deprecation file" do
         assert_deprecations_recorded("Foo", "Bar") do
           ActiveSupport::Deprecation.warn("Foo")
@@ -58,10 +82,10 @@ module DeprecationToolkit
 
       private
 
-      def assert_deprecations_recorded(*deprecation_triggered)
+      def assert_deprecations_recorded(*deprecation_triggered, to: @deprecation_path)
         yield
 
-        recorded = YAML.load_file("#{@deprecation_path}/deprecation_toolkit/behaviors/record_test.yml").fetch(name)
+        recorded = YAML.load_file("#{to}/deprecation_toolkit/behaviors/record_test.yml").fetch(name)
         triggered = deprecation_triggered.map { |msg| "DEPRECATION WARNING: #{msg}" }
 
         assert_equal(recorded, triggered)
