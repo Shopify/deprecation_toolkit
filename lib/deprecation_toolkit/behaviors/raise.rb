@@ -77,9 +77,9 @@ module DeprecationToolkit
           #{record_message}
 
           ===== Expected
-          #{recorded_deprecations.deprecations.join("\n")}
+          #{recorded_deprecations.deprecations_without_stacktrace.join("\n")}
           ===== Actual
-          #{current_deprecations.deprecations.join("\n")}
+          #{current_deprecations.deprecations_without_stacktrace.join("\n")}
         EOM
 
         super(message)
