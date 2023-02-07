@@ -2,6 +2,10 @@
 
 ## main (unreleased)
 
+## 2.0.2 (2023-02-08)
+
+* [#78](https://github.com/Shopify/deprecation_toolkit/pull/78): Show deprecations without stacktrace. (@shioyama)
+
 ## 2.0.1 (2022-11-18)
 
 * [#74](https://github.com/Shopify/deprecation_toolkit/pull/74): Add support for `Rails.application.deprecators`. (@gmcgibbon)
