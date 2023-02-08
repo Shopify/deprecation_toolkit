@@ -35,11 +35,9 @@ module DeprecationToolkit
 
     def deprecations_without_stacktrace
       deprecations.map do |deprecation|
-        if ActiveSupport.gem_version.to_s < "5.0"
-          deprecation.sub(/\W\s\(called from .*\)$/, "")
-        else
-          deprecation.sub(/ \(called from .*\)$/, "")
-        end
+        deprecation
+          .sub(*active_support_deprecation_sub_params)
+          .sub(*gem_deprecate_sub_params)
       end
     end
 
@@ -62,6 +60,20 @@ module DeprecationToolkit
 
     def flaky?
       size == 1 && deprecations.first["flaky"] == true
+    end
+
+    private
+
+    def active_support_deprecation_sub_params
+      if ActiveSupport.gem_version.to_s < "5.0"
+        [/\W\s\(called from .*\)$/, ""]
+      else
+        [/ \(called from .*\)$/, ""]
+      end
+    end
+
+    def gem_deprecate_sub_params
+      [/NOTE: (.*is deprecated.*)\n.* called from.*:\d+\.\n/, "\\1"]
     end
   end
 end
