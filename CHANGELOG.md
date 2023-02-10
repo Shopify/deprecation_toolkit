@@ -2,6 +2,10 @@
 
 ## main (unreleased)
 
+## 2.0.3 (2023-02-10)
+
+* [#80](https://github.com/Shopify/deprecation_toolkit/pull/80): Filter out stack trace from Gem::Deprecate deprecation messages
+
 ## 2.0.2 (2023-02-08)
 
 * [#78](https://github.com/Shopify/deprecation_toolkit/pull/78): Show deprecations without stacktrace. (@shioyama)
