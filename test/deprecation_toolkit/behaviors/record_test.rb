@@ -80,15 +80,40 @@ module DeprecationToolkit
         end
       end
 
+      test ".trigger records deprecations without stack trace even for Gem::Deprecate" do
+        previous_warnings_treated_as_deprecation = Configuration.warnings_treated_as_deprecation
+        Configuration.warnings_treated_as_deprecation = [/#example is deprecated/]
+
+        # produce a Gem::Deprecate warning
+        dummy = Class.new do
+          extend Gem::Deprecate
+          def example; end
+          deprecate :example, :new_example, 2019, 1
+        end
+        dummy.new.example
+        trigger_deprecation_toolkit_behavior
+
+        recorded_deprecation = recorded_deprecations.first
+
+        assert_match(/.*#example is deprecated; use new_example instead\./, recorded_deprecation)
+        refute_match(/called from/, recorded_deprecation)
+
+      ensure
+        Configuration.warnings_treated_as_deprecation = previous_warnings_treated_as_deprecation
+      end
+
       private
 
       def assert_deprecations_recorded(*deprecation_triggered, to: @deprecation_path)
         yield
 
-        recorded = YAML.load_file("#{to}/deprecation_toolkit/behaviors/record_test.yml").fetch(name)
         triggered = deprecation_triggered.map { |msg| "DEPRECATION WARNING: #{msg}" }
 
-        assert_equal(recorded, triggered)
+        assert_equal(recorded_deprecations(to: to), triggered)
+      end
+
+      def recorded_deprecations(to: @deprecation_path)
+        YAML.load_file("#{to}/deprecation_toolkit/behaviors/record_test.yml").fetch(name)
       end
     end
   end
