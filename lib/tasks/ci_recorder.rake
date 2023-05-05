@@ -29,7 +29,7 @@ class CIRecorder
 
   def extract_deprecations_output(file)
     tmp_file = Tempfile.new
-    shell_command = "cat #{file} | sed -n -e 's/^.* \\[DeprecationToolkit\\] \\(.*\\)/\\1/p' > #{tmp_file.path}"
+    shell_command = "cat #{file} | sed 's,\\x1B\\[[0-9;]*[a-zA-Z],,g' | sed -n -e 's/^.* \\[DeprecationToolkit\\] \\(.*\\)/\\1/p' > #{tmp_file.path}"
 
     raise "Couldn't extract deprecations from output" unless system(shell_command)
 
