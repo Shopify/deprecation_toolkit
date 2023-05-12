@@ -37,19 +37,20 @@ module DeprecationToolkit
       str
     end
 
-    def deprecation_triggered?(str)
-      DeprecationToolkit::Configuration.warnings_treated_as_deprecation.any? { |warning| warning =~ str }
+    def deprecation_triggered?(str, category: nil)
+      (category == :deprecated && ::Warning[:deprecated]) ||
+        DeprecationToolkit::Configuration.warnings_treated_as_deprecation.any? { |warning| warning =~ str }
     end
   end
 end
 
 module DeprecationToolkit
   module WarningPatch
-    def warn(str)
+    def warn(str, category: nil)
       str = DeprecationToolkit::Warning.handle_multipart(str)
       return unless str
 
-      if DeprecationToolkit::Warning.deprecation_triggered?(str)
+      if DeprecationToolkit::Warning.deprecation_triggered?(str, category: category)
         ActiveSupport::Deprecation.warn(str)
       else
         super

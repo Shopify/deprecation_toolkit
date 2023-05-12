@@ -6,9 +6,13 @@ module DeprecationToolkit
   class WarningTest < ActiveSupport::TestCase
     setup do
       @previous_warnings_treated_as_deprecation = Configuration.warnings_treated_as_deprecation
+      @previous_warnings_deprecated_category = Configuration.warning_deprecated_category
+      @previous_warning_experimental = ::Warning[:experimental]
     end
 
     teardown do
+      ::Warning[:experimental] = @previous_warning_experimental
+      Configuration.warning_deprecated_category = @previous_warnings_deprecated_category
       Configuration.warnings_treated_as_deprecation = @previous_warnings_treated_as_deprecation
     end
 
@@ -77,6 +81,38 @@ module DeprecationToolkit
 
       assert_match(/Using the last argument as keyword parameters/, error.message)
       assert_match(/The called method/, error.message)
+    end
+
+    test "warn preserves category" do
+      ::Warning[:experimental] = true
+      assert_output(nil, /#example is experimental/) do
+        warn "#example is experimental", category: :experimental
+
+        trigger_deprecation_toolkit_behavior
+      end
+
+      ::Warning[:experimental] = false
+      assert_silent do
+        warn "#example is experimental", category: :experimental
+
+        trigger_deprecation_toolkit_behavior
+      end
+    end
+
+    test "treats `category: :deprecated` as deprecations, if flag is set" do
+      Configuration.warning_deprecated_category = true
+      assert_raises Behaviors::DeprecationIntroduced do
+        warn "#example is deprecated", category: :deprecated
+
+        trigger_deprecation_toolkit_behavior
+      end
+
+      Configuration.warning_deprecated_category = false
+      assert_nothing_raised do
+        warn "#example is deprecated", category: :deprecated
+
+        trigger_deprecation_toolkit_behavior
+      end
     end
   end
 end

@@ -117,6 +117,18 @@ This setting accepts an array of regular expressions. To match on all warnings, 
 DeprecationToolkit::Configuration.warnings_treated_as_deprecation = [//]
 ```
 
+### 🔨 `#DeprecationToolkit::Configuration#warning_deprecated_category`
+
+[Ruby silences its deprecation warnings by setting the `Warning[:deprecated]` category to `false`
+unless otherwise specified.](https://bugs.ruby-lang.org/projects/ruby-master/repository/git/revisions/a84ad24386d27269b90794146c2a351c1d79471b)
+This configuration option enables that category by default.
+
+| Value of `DeprecationToolkit::Configuration#warning_deprecated_category` | Value of `Warning[:deprecated]` |
+|--------------------------------------------------------------------------|---------------------------------|
+| `true` (default)                                                         | `true`                          |
+| `false`                                                                  | `false`                         |
+| `nil`                                                                    | Unchanged                       |
+
 ## RSpec
 
 By default Deprecation Toolkit uses Minitest as its test runner. To use Deprecation Toolkit with RSpec you'll have to configure it.
