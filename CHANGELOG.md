@@ -2,6 +2,8 @@
 
 ## main (unreleased)
 
+* [#86](https://github.com/Shopify/deprecation_toolkit/pull/86): Preserve and utilize `Warning` categories
+
 ## 2.0.3 (2023-02-10)
 
 * [#80](https://github.com/Shopify/deprecation_toolkit/pull/80): Filter out stack trace from Gem::Deprecate deprecation messages
