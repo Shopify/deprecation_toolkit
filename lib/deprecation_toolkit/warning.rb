@@ -50,7 +50,7 @@ module DeprecationToolkit
       return unless str
 
       if DeprecationToolkit::Warning.deprecation_triggered?(str)
-        ActiveSupport::Deprecation.warn(str)
+        ActiveSupport::Deprecation.new.warn(str)
       else
         super
       end

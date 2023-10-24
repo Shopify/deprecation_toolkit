@@ -19,8 +19,8 @@ module DeprecationToolkit
         @expected_exception_message =
           /DEPRECATION\ WARNING\:\ Foo\ \(called\ from\ .*\nDEPRECATION\ WARNING\:\ Bar\ \(called from\ .*/
 
-        ActiveSupport::Deprecation.warn("Foo")
-        ActiveSupport::Deprecation.warn("Bar")
+        ActiveSupport::Deprecation.new.warn("Foo")
+        ActiveSupport::Deprecation.new.warn("Bar")
       end
 
       test ".trigger raises a DeprecationRemoved error when deprecations are removed" do
@@ -33,7 +33,7 @@ module DeprecationToolkit
           DEPRECATION WARNING: Bar
         EOM
 
-        ActiveSupport::Deprecation.warn("Foo")
+        ActiveSupport::Deprecation.new.warn("Foo")
       end
 
       test ".trigger raises a DeprecationRemoved when less deprecations than expected are triggerd and mismatches" do
@@ -47,7 +47,7 @@ module DeprecationToolkit
           DEPRECATION WARNING: B
         EOM
 
-        ActiveSupport::Deprecation.warn("C")
+        ActiveSupport::Deprecation.new.warn("C")
       end
 
       test ".trigger raises a DeprecationMismatch when same number of deprecations are triggered with mismatches" do
@@ -64,13 +64,13 @@ module DeprecationToolkit
           DEPRECATION WARNING: A
         EOM
 
-        ActiveSupport::Deprecation.warn("A")
+        ActiveSupport::Deprecation.new.warn("A")
       end
 
       test ".trigger does not raise when deprecations are triggered but were already recorded" do
         assert_nothing_raised do
-          ActiveSupport::Deprecation.warn("Foo")
-          ActiveSupport::Deprecation.warn("Bar")
+          ActiveSupport::Deprecation.new.warn("Foo")
+          ActiveSupport::Deprecation.new.warn("Bar")
         end
       end
 
@@ -79,7 +79,7 @@ module DeprecationToolkit
         Configuration.allowed_deprecations = [/John Doe/]
 
         begin
-          ActiveSupport::Deprecation.warn("John Doe")
+          ActiveSupport::Deprecation.new.warn("John Doe")
           assert_nothing_raised { trigger_deprecation_toolkit_behavior }
         ensure
           Configuration.allowed_deprecations = @old_allowed_deprecations
@@ -93,7 +93,7 @@ module DeprecationToolkit
           end
 
           def deprecation_callee
-            ActiveSupport::Deprecation.warn("John Doe")
+            ActiveSupport::Deprecation.new.warn("John Doe")
           end
         RUBY
 
@@ -112,8 +112,8 @@ module DeprecationToolkit
 
       test ".trigger does not raise when test is flaky" do
         assert_nothing_raised do
-          ActiveSupport::Deprecation.warn("Foo")
-          ActiveSupport::Deprecation.warn("Bar")
+          ActiveSupport::Deprecation.new.warn("Foo")
+          ActiveSupport::Deprecation.new.warn("Bar")
         end
       end
 

@@ -14,8 +14,8 @@ RSpec.describe(DeprecationToolkit::Behaviors::Raise) do
 
   it ".trigger noop any deprecations" do |example|
     expect do
-      ActiveSupport::Deprecation.warn("Foo")
-      ActiveSupport::Deprecation.warn("Bar")
+      ActiveSupport::Deprecation.new.warn("Foo")
+      ActiveSupport::Deprecation.new.warn("Bar")
 
       DeprecationToolkit::TestTriggerer.trigger_deprecation_toolkit_behavior(example)
     end.not_to(raise_error)

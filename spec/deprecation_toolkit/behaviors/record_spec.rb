@@ -20,8 +20,8 @@ RSpec.describe(DeprecationToolkit::Behaviors::Record) do
 
   it ".trigger should record deprecations" do |example|
     expect_deprecations_recorded("Foo", "Bar", example) do
-      ActiveSupport::Deprecation.warn("Foo")
-      ActiveSupport::Deprecation.warn("Bar")
+      ActiveSupport::Deprecation.new.warn("Foo")
+      ActiveSupport::Deprecation.new.warn("Bar")
 
       DeprecationToolkit::TestTriggerer.trigger_deprecation_toolkit_behavior(example)
     end
@@ -29,14 +29,14 @@ RSpec.describe(DeprecationToolkit::Behaviors::Record) do
 
   it ".trigger re-record an existing deprecation file" do |example|
     expect_deprecations_recorded("Foo", "Bar", example) do
-      ActiveSupport::Deprecation.warn("Foo")
-      ActiveSupport::Deprecation.warn("Bar")
+      ActiveSupport::Deprecation.new.warn("Foo")
+      ActiveSupport::Deprecation.new.warn("Bar")
 
       DeprecationToolkit::TestTriggerer.trigger_deprecation_toolkit_behavior(example)
     end
 
     expect_deprecations_recorded("Foo", example) do
-      ActiveSupport::Deprecation.warn("Foo")
+      ActiveSupport::Deprecation.new.warn("Foo")
 
       DeprecationToolkit::TestTriggerer.trigger_deprecation_toolkit_behavior(example)
     end
@@ -44,7 +44,7 @@ RSpec.describe(DeprecationToolkit::Behaviors::Record) do
 
   it ".trigger removes the deprecation file when all deprecations were removed" do |example|
     expect_deprecations_recorded("Foo", example) do
-      ActiveSupport::Deprecation.warn("Foo")
+      ActiveSupport::Deprecation.new.warn("Foo")
 
       DeprecationToolkit::TestTriggerer.trigger_deprecation_toolkit_behavior(example)
     end

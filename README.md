@@ -87,7 +87,7 @@ Whenever a deprecation matches one of the regex, it is ignored.
 ```ruby
 DeprecationToolkit::Configuration.allowed_deprecations = [/Hello World/]
 
-ActiveSupport::Deprecation.warn('Hello World') # ignored by Deprecation Toolkit
+ActiveSupport::Deprecation.new.warn('Hello World') # ignored by Deprecation Toolkit
 ```
 
 When passing procs, each proc will get passed the deprecation message and the callstack.
@@ -99,7 +99,7 @@ DeprecationToolkit::Configuration.allowed_deprecations = [
 ]
 
 def method_triggering_deprecation
-  ActiveSupport::Deprecation.warn('Foo') # Ignored by the the DeprecationToolkit
+  ActiveSupport::Deprecation.new.warn('Foo') # Ignored by the the DeprecationToolkit
 end
 ```
 

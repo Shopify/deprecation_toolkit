@@ -14,8 +14,8 @@ RSpec.describe(DeprecationToolkit::Behaviors::Raise) do
 
   it ".trigger raises an DeprecationIntroduced error when deprecations are introduced" do |example|
     expect do
-      ActiveSupport::Deprecation.warn("Foo")
-      ActiveSupport::Deprecation.warn("Bar")
+      ActiveSupport::Deprecation.new.warn("Foo")
+      ActiveSupport::Deprecation.new.warn("Bar")
 
       DeprecationToolkit::TestTriggerer.trigger_deprecation_toolkit_behavior(example)
     end.to(raise_error(DeprecationToolkit::Behaviors::DeprecationIntroduced))
@@ -23,7 +23,7 @@ RSpec.describe(DeprecationToolkit::Behaviors::Raise) do
 
   it ".trigger raises a DeprecationRemoved error when deprecations are removed" do |example|
     expect do
-      ActiveSupport::Deprecation.warn("Foo")
+      ActiveSupport::Deprecation.new.warn("Foo")
 
       DeprecationToolkit::TestTriggerer.trigger_deprecation_toolkit_behavior(example)
     end.to(raise_error(DeprecationToolkit::Behaviors::DeprecationRemoved))
@@ -31,7 +31,7 @@ RSpec.describe(DeprecationToolkit::Behaviors::Raise) do
 
   it ".trigger raises a DeprecationRemoved when mismatched and less than expected" do |example|
     expect do
-      ActiveSupport::Deprecation.warn("C")
+      ActiveSupport::Deprecation.new.warn("C")
 
       DeprecationToolkit::TestTriggerer.trigger_deprecation_toolkit_behavior(example)
     end.to(raise_error(DeprecationToolkit::Behaviors::DeprecationRemoved))
@@ -39,7 +39,7 @@ RSpec.describe(DeprecationToolkit::Behaviors::Raise) do
 
   it ".trigger raises a DeprecationMismatch when same number of deprecations are triggered with mismatches" do |example|
     expect do
-      ActiveSupport::Deprecation.warn("A")
+      ActiveSupport::Deprecation.new.warn("A")
 
       DeprecationToolkit::TestTriggerer.trigger_deprecation_toolkit_behavior(example)
     end.to(raise_error(DeprecationToolkit::Behaviors::DeprecationMismatch))
@@ -47,8 +47,8 @@ RSpec.describe(DeprecationToolkit::Behaviors::Raise) do
 
   it ".trigger does not raise when deprecations are triggered but were already recorded" do |example|
     expect do
-      ActiveSupport::Deprecation.warn("Foo")
-      ActiveSupport::Deprecation.warn("Bar")
+      ActiveSupport::Deprecation.new.warn("Foo")
+      ActiveSupport::Deprecation.new.warn("Bar")
 
       DeprecationToolkit::TestTriggerer.trigger_deprecation_toolkit_behavior(example)
     end.not_to(raise_error)
@@ -59,7 +59,7 @@ RSpec.describe(DeprecationToolkit::Behaviors::Raise) do
     DeprecationToolkit::Configuration.allowed_deprecations = [/John Doe/]
 
     begin
-      ActiveSupport::Deprecation.warn("John Doe")
+      ActiveSupport::Deprecation.new.warn("John Doe")
       expect do
         DeprecationToolkit::TestTriggerer.trigger_deprecation_toolkit_behavior(example)
       end.not_to(raise_error)
@@ -75,7 +75,7 @@ RSpec.describe(DeprecationToolkit::Behaviors::Raise) do
       end
 
       def deprecation_callee
-        ActiveSupport::Deprecation.warn("John Doe")
+        ActiveSupport::Deprecation.new.warn("John Doe")
       end
     RUBY
 

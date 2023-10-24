@@ -33,11 +33,11 @@ module DeprecationToolkit
           end
 
           def test_generate_deprecation
-            ActiveSupport::Deprecation.warn("Foo")
+            ActiveSupport::Deprecation.new.warn("Foo")
           end
 
           def test_generate_second_deprecation
-            ActiveSupport::Deprecation.warn("Bar")
+            ActiveSupport::Deprecation.new.warn("Bar")
           end
         end
 

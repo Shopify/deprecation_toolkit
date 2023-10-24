@@ -16,8 +16,8 @@ module DeprecationToolkit
 
       test ".trigger noop any deprecations" do
         assert_nothing_raised do
-          ActiveSupport::Deprecation.warn("Foo")
-          ActiveSupport::Deprecation.warn("Bar")
+          ActiveSupport::Deprecation.new.warn("Foo")
+          ActiveSupport::Deprecation.new.warn("Bar")
 
           trigger_deprecation_toolkit_behavior
         end

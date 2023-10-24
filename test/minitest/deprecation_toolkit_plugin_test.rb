@@ -92,7 +92,7 @@ module Minitest
       end
 
       error = assert_raises(DeprecationToolkit::Behaviors::DeprecationIntroduced) do
-        ActiveSupport::Deprecation.warn("Deprecated!")
+        ActiveSupport::Deprecation.new.warn("Deprecated!")
         trigger_deprecation_toolkit_behavior
       end
 
