@@ -4,6 +4,8 @@ require "spec_helper"
 require "tmpdir"
 
 RSpec.describe(DeprecationToolkit::Behaviors::Record) do
+  include TestDeprecator
+
   before do
     @previous_deprecation_path = DeprecationToolkit::Configuration.deprecation_path
     @deprecation_path = Dir.mktmpdir
@@ -20,8 +22,8 @@ RSpec.describe(DeprecationToolkit::Behaviors::Record) do
 
   it ".trigger should record deprecations" do |example|
     expect_deprecations_recorded("Foo", "Bar", example) do
-      ActiveSupport::Deprecation.warn("Foo")
-      ActiveSupport::Deprecation.warn("Bar")
+      deprecator.warn("Foo")
+      deprecator.warn("Bar")
 
       DeprecationToolkit::TestTriggerer.trigger_deprecation_toolkit_behavior(example)
     end
@@ -29,14 +31,14 @@ RSpec.describe(DeprecationToolkit::Behaviors::Record) do
 
   it ".trigger re-record an existing deprecation file" do |example|
     expect_deprecations_recorded("Foo", "Bar", example) do
-      ActiveSupport::Deprecation.warn("Foo")
-      ActiveSupport::Deprecation.warn("Bar")
+      deprecator.warn("Foo")
+      deprecator.warn("Bar")
 
       DeprecationToolkit::TestTriggerer.trigger_deprecation_toolkit_behavior(example)
     end
 
     expect_deprecations_recorded("Foo", example) do
-      ActiveSupport::Deprecation.warn("Foo")
+      deprecator.warn("Foo")
 
       DeprecationToolkit::TestTriggerer.trigger_deprecation_toolkit_behavior(example)
     end
@@ -44,7 +46,7 @@ RSpec.describe(DeprecationToolkit::Behaviors::Record) do
 
   it ".trigger removes the deprecation file when all deprecations were removed" do |example|
     expect_deprecations_recorded("Foo", example) do
-      ActiveSupport::Deprecation.warn("Foo")
+      deprecator.warn("Foo")
 
       DeprecationToolkit::TestTriggerer.trigger_deprecation_toolkit_behavior(example)
     end
