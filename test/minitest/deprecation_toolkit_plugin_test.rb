@@ -11,7 +11,9 @@ module Minitest
           @behavior ||= []
         end
 
-        attr_writer :behavior
+        def behavior=(behavior)
+          @behavior = Array(behavior)
+        end
       end
 
       class Deprecators < Array
