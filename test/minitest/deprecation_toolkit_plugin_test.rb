@@ -51,15 +51,17 @@ module Minitest
       DeprecationToolkit::Configuration.behavior = previous_behavior
     end
 
-    test ".plugin_deprecation_toolkit_init add `notify` behavior to the deprecations behavior list" do
-      deprecators_before = Rails.application.method(:deprecators)
-      Rails.application.singleton_class.undef_method(:deprecators)
-      behavior = ActiveSupport::Deprecation::DEFAULT_BEHAVIORS[:notify]
-      Minitest.plugin_deprecation_toolkit_init({})
+    if ActiveSupport.gem_version < Gem::Version.new("7.1.0")
+      test ".plugin_deprecation_toolkit_init add `notify` behavior to the deprecations behavior list" do
+        deprecators_before = Rails.application.method(:deprecators)
+        Rails.application.singleton_class.undef_method(:deprecators)
+        behavior = ActiveSupport::Deprecation::DEFAULT_BEHAVIORS[:notify]
+        Minitest.plugin_deprecation_toolkit_init({})
 
-      assert_includes(ActiveSupport::Deprecation.behavior, behavior)
-    ensure
-      Rails.application.singleton_class.define_method(:deprecators, &deprecators_before)
+        assert_includes(ActiveSupport::Deprecation.behavior, behavior)
+      ensure
+        Rails.application.singleton_class.define_method(:deprecators, &deprecators_before)
+      end
     end
 
     test ".plugin_deprecation_toolkit_init add `notify` behavior to the deprecations behavior list with Rails.application.deprecators" do
