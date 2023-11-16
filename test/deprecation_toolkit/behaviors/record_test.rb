@@ -6,6 +6,8 @@ require "tmpdir"
 module DeprecationToolkit
   module Behaviors
     class RecordTest < ActiveSupport::TestCase
+      include TestDeprecator
+
       setup do
         @previous_deprecation_path = Configuration.deprecation_path
         @deprecation_path = Dir.mktmpdir
@@ -22,8 +24,8 @@ module DeprecationToolkit
 
       test ".trigger record deprecations" do
         assert_deprecations_recorded("Foo", "Bar") do
-          ActiveSupport::Deprecation.warn("Foo")
-          ActiveSupport::Deprecation.warn("Bar")
+          deprecator.warn("Foo")
+          deprecator.warn("Bar")
 
           trigger_deprecation_toolkit_behavior
         end
@@ -35,7 +37,7 @@ module DeprecationToolkit
         end
 
         assert_deprecations_recorded("Foo", to: "#{@deprecation_path}/prefix") do
-          ActiveSupport::Deprecation.warn("Foo")
+          deprecator.warn("Foo")
 
           trigger_deprecation_toolkit_behavior
         end
@@ -55,14 +57,14 @@ module DeprecationToolkit
 
       test ".trigger re-record an existing deprecation file" do
         assert_deprecations_recorded("Foo", "Bar") do
-          ActiveSupport::Deprecation.warn("Foo")
-          ActiveSupport::Deprecation.warn("Bar")
+          deprecator.warn("Foo")
+          deprecator.warn("Bar")
 
           trigger_deprecation_toolkit_behavior
         end
 
         assert_deprecations_recorded("Foo") do
-          ActiveSupport::Deprecation.warn("Foo")
+          deprecator.warn("Foo")
 
           trigger_deprecation_toolkit_behavior
         end
@@ -70,7 +72,7 @@ module DeprecationToolkit
 
       test ".trigger removes the deprecation file when all deprecations were removed" do
         assert_deprecations_recorded("Foo") do
-          ActiveSupport::Deprecation.warn("Foo")
+          deprecator.warn("Foo")
 
           trigger_deprecation_toolkit_behavior
         end
