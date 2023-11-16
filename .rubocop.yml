@@ -3,6 +3,7 @@ inherit_gem:
 
 AllCops:
   TargetRubyVersion: 2.6
+  SuggestExtensions: false
   Exclude:
     - gemfiles/vendor/**/*
 
