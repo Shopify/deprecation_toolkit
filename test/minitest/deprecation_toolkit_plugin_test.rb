@@ -14,7 +14,7 @@ module Minitest
         attr_writer :behavior
       end
 
-      class Deprecatiors < Array
+      class Deprecators < Array
         def initialize(number)
           super()
           number.times { self << Deprecator.new }
@@ -26,7 +26,7 @@ module Minitest
       end
 
       def deprecators
-        @deprecators ||= Deprecatiors.new(3)
+        @deprecators ||= Deprecators.new(3)
       end
     end
 
