@@ -40,6 +40,13 @@ module DeprecationToolkit
     def deprecation_triggered?(str)
       DeprecationToolkit::Configuration.warnings_treated_as_deprecation.any? { |warning| warning =~ str }
     end
+
+    def deprecator
+      @deprecator ||= ActiveSupport::Deprecation.new("next", "DeprecationToolkit::Warning").tap do |deprecator|
+        deprecator.behavior = :notify
+        DeprecationSubscriber.attach_to(:deprecation_toolkit_warning)
+      end
+    end
   end
 end
 
@@ -50,7 +57,7 @@ module DeprecationToolkit
       return unless str
 
       if DeprecationToolkit::Warning.deprecation_triggered?(str)
-        ActiveSupport::Deprecation.warn(str)
+        DeprecationToolkit::Warning.deprecator.warn(str)
       else
         super
       end
