@@ -11,10 +11,12 @@ module Minitest
           @behavior ||= []
         end
 
-        attr_writer :behavior
+        def behavior=(behavior)
+          @behavior = Array(behavior)
+        end
       end
 
-      class Deprecatiors < Array
+      class Deprecators < Array
         def initialize(number)
           super()
           number.times { self << Deprecator.new }
@@ -26,7 +28,7 @@ module Minitest
       end
 
       def deprecators
-        @deprecators ||= Deprecatiors.new(3)
+        @deprecators ||= Deprecators.new(3)
       end
     end
 
@@ -49,34 +51,49 @@ module Minitest
       DeprecationToolkit::Configuration.behavior = previous_behavior
     end
 
-    test ".plugin_deprecation_toolkit_init add `notify` behavior to the deprecations behavior list" do
-      behavior = ActiveSupport::Deprecation::DEFAULT_BEHAVIORS[:notify]
+    if ActiveSupport.gem_version < Gem::Version.new("7.1.0")
+      test ".plugin_deprecation_toolkit_init add `notify` behavior to the deprecations behavior list" do
+        deprecators_before = Rails.application.method(:deprecators)
+        Rails.application.singleton_class.undef_method(:deprecators)
+        behavior = ActiveSupport::Deprecation::DEFAULT_BEHAVIORS[:notify]
+        Minitest.plugin_deprecation_toolkit_init({})
 
-      assert_includes ActiveSupport::Deprecation.behavior, behavior
+        assert_includes(ActiveSupport::Deprecation.behavior, behavior)
+      ensure
+        Rails.application.singleton_class.define_method(:deprecators, &deprecators_before)
+      end
     end
 
     test ".plugin_deprecation_toolkit_init add `notify` behavior to the deprecations behavior list with Rails.application.deprecators" do
       behavior = ActiveSupport::Deprecation::DEFAULT_BEHAVIORS[:notify]
 
-      Rails.singleton_class.define_method(:application) { @application ||= FakeApplication.new }
+      with_fake_application do
+        Minitest.plugin_deprecation_toolkit_init({})
 
-      Minitest.plugin_deprecation_toolkit_init({})
-
-      Rails.application.deprecators.each do |deprecator|
-        assert_includes(deprecator.behavior, behavior)
+        Rails.application.deprecators.each do |deprecator|
+          assert_includes(deprecator.behavior, behavior)
+        end
       end
+    end
 
+    def with_fake_application
+      application_before = Rails.method(:application)
+      Rails.singleton_class.redefine_method(:application) { @application ||= FakeApplication.new }
+      yield
     ensure
-      Rails.singleton_class.undef_method(:application)
+      Rails.singleton_class.redefine_method(:application, &application_before)
     end
 
     test ".plugin_deprecation_toolkit_init doesn't remove previous deprecation behaviors" do
       behavior = ActiveSupport::Deprecation::DEFAULT_BEHAVIORS[:silence]
-      ActiveSupport::Deprecation.behavior = behavior
+      with_fake_application do
+        deprecator = Rails.application.deprecators.first
+        deprecator.behavior = behavior
 
-      Minitest.plugin_deprecation_toolkit_init({})
+        Minitest.plugin_deprecation_toolkit_init({})
 
-      assert_includes ActiveSupport::Deprecation.behavior, behavior
+        assert_includes deprecator.behavior, behavior
+      end
     end
 
     test ".plugin_deprecation_toolkit_init doesn't reattach subscriber when called multiple times" do
@@ -92,7 +109,9 @@ module Minitest
       end
 
       error = assert_raises(DeprecationToolkit::Behaviors::DeprecationIntroduced) do
-        ActiveSupport::Deprecation.warn("Deprecated!")
+        fake_rails_deprecator = ActiveSupport::Deprecation.new("next version", "Rails")
+        fake_rails_deprecator.behavior = :notify
+        fake_rails_deprecator.warn("Deprecated!")
         trigger_deprecation_toolkit_behavior
       end
 

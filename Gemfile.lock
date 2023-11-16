@@ -7,17 +7,28 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (7.0.4.3)
+    activesupport (7.1.2)
+      base64
+      bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
+      connection_pool (>= 2.2.5)
+      drb
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
+      mutex_m
       tzinfo (~> 2.0)
     ast (2.4.2)
+    base64 (0.2.0)
+    bigdecimal (3.1.4)
     concurrent-ruby (1.2.2)
+    connection_pool (2.4.1)
     diff-lcs (1.5.0)
-    i18n (1.12.0)
+    drb (2.2.0)
+      ruby2_keywords
+    i18n (1.14.1)
       concurrent-ruby (~> 1.0)
-    minitest (5.15.0)
+    minitest (5.20.0)
+    mutex_m (0.2.0)
     parallel (1.21.0)
     parser (3.1.1.0)
       ast (~> 2.4.1)
@@ -52,6 +63,7 @@ GEM
     rubocop-shopify (2.5.0)
       rubocop (~> 1.25)
     ruby-progressbar (1.11.0)
+    ruby2_keywords (0.0.5)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.1.0)
