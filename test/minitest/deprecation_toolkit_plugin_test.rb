@@ -52,9 +52,14 @@ module Minitest
     end
 
     test ".plugin_deprecation_toolkit_init add `notify` behavior to the deprecations behavior list" do
+      deprecators_before = Rails.application.method(:deprecators)
+      Rails.application.singleton_class.undef_method(:deprecators)
       behavior = ActiveSupport::Deprecation::DEFAULT_BEHAVIORS[:notify]
+      Minitest.plugin_deprecation_toolkit_init({})
 
-      assert_includes ActiveSupport::Deprecation.behavior, behavior
+      assert_includes(ActiveSupport::Deprecation.behavior, behavior)
+    ensure
+      Rails.application.singleton_class.define_method(:deprecators, &deprecators_before)
     end
 
     test ".plugin_deprecation_toolkit_init add `notify` behavior to the deprecations behavior list with Rails.application.deprecators" do
@@ -70,10 +75,11 @@ module Minitest
     end
 
     def with_fake_application
-      Rails.singleton_class.define_method(:application) { @application ||= FakeApplication.new }
+      application_before = Rails.method(:application)
+      Rails.singleton_class.redefine_method(:application) { @application ||= FakeApplication.new }
       yield
     ensure
-      Rails.singleton_class.undef_method(:application)
+      Rails.singleton_class.redefine_method(:application, &application_before)
     end
 
     test ".plugin_deprecation_toolkit_init doesn't remove previous deprecation behaviors" do
