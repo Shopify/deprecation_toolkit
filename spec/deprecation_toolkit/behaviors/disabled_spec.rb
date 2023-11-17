@@ -3,6 +3,8 @@
 require "spec_helper"
 
 RSpec.describe(DeprecationToolkit::Behaviors::Raise) do
+  include TestDeprecator
+
   before do
     @previous_configuration = DeprecationToolkit::Configuration.behavior
     DeprecationToolkit::Configuration.behavior = DeprecationToolkit::Behaviors::Disabled
@@ -14,8 +16,8 @@ RSpec.describe(DeprecationToolkit::Behaviors::Raise) do
 
   it ".trigger noop any deprecations" do |example|
     expect do
-      ActiveSupport::Deprecation.warn("Foo")
-      ActiveSupport::Deprecation.warn("Bar")
+      deprecator.warn("Foo")
+      deprecator.warn("Bar")
 
       DeprecationToolkit::TestTriggerer.trigger_deprecation_toolkit_behavior(example)
     end.not_to(raise_error)
