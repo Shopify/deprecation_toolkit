@@ -5,6 +5,7 @@ require "deprecation_toolkit"
 require "deprecation_toolkit/rspec_plugin"
 require "active_support/all"
 require_relative "../test/support/test_deprecator"
+require_relative "../test/support/fake_rails"
 
 DeprecationToolkit::Configuration.test_runner = :rspec
 DeprecationToolkit::Configuration.deprecation_path = "spec/deprecations"
