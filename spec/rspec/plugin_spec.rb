@@ -31,4 +31,18 @@ RSpec.describe(DeprecationToolkit::RSpecPlugin) do
       end
     end
   end
+
+  it "should add `notify` behavior to the deprecations behavior list with Rails.application.deprecators" do
+    behavior = ActiveSupport::Deprecation::DEFAULT_BEHAVIORS[:notify]
+    deprecator = Rails.application.deprecators.each.first
+    expect(deprecator.behavior).to(include(behavior))
+  end
+
+  it "doesn't remove previous deprecation behaviors with Rails.application.deprecators" do
+    behavior = ActiveSupport::Deprecation::DEFAULT_BEHAVIORS[:silence]
+    deprecator = Rails.application.deprecators.each.first
+
+    deprecator.behavior = behavior
+    expect(deprecator.behavior).to(include(behavior))
+  end
 end
