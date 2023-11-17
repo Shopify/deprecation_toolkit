@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "active_support/core_ext/string/inflections"
+require "active_support/core_ext/string/filters"
 require "bundler"
 require "yaml"
 
