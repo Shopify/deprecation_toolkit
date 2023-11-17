@@ -5,6 +5,8 @@ require "test_helper"
 module DeprecationToolkit
   module Behaviors
     class DisabledTest < ActiveSupport::TestCase
+      include TestDeprecator
+
       setup do
         @previous_configuration = Configuration.behavior
         Configuration.behavior = Disabled
@@ -16,8 +18,8 @@ module DeprecationToolkit
 
       test ".trigger noop any deprecations" do
         assert_nothing_raised do
-          ActiveSupport::Deprecation.warn("Foo")
-          ActiveSupport::Deprecation.warn("Bar")
+          deprecator.warn("Foo")
+          deprecator.warn("Bar")
 
           trigger_deprecation_toolkit_behavior
         end
