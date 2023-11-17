@@ -10,6 +10,12 @@ require_relative "../test/support/fake_rails"
 DeprecationToolkit::Configuration.test_runner = :rspec
 DeprecationToolkit::Configuration.deprecation_path = "spec/deprecations"
 
+if ActiveSupport.respond_to?(:deprecator)
+  ActiveSupport.deprecator.behavior = :raise
+else
+  ActiveSupport::Deprecation.behavior = :raise
+end
+
 RSpec.configure do |config|
   # Disable RSpec exposing methods globally on `Module` and `main`
   config.disable_monkey_patching!

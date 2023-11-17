@@ -8,5 +8,9 @@ require "active_support/all"
 require_relative "support/test_deprecator"
 require_relative "support/fake_rails"
 
-ActiveSupport::Deprecation.behavior = :silence
+if ActiveSupport.respond_to?(:deprecator)
+  ActiveSupport.deprecator.behavior = :raise
+else
+  ActiveSupport::Deprecation.behavior = :raise
+end
 ActiveSupport::TestCase.test_order = :random
