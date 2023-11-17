@@ -16,6 +16,7 @@ RSpec.describe(DeprecationToolkit::RSpecPlugin) do
       with_rails_70_app do
         behavior = ActiveSupport::Deprecation::DEFAULT_BEHAVIORS[:notify]
 
+        DeprecationToolkit::RSpecPlugin.before_suite
         expect(ActiveSupport::Deprecation.behavior).to(include(behavior))
       end
     end
@@ -24,6 +25,7 @@ RSpec.describe(DeprecationToolkit::RSpecPlugin) do
       with_rails_70_app do
         behavior = ActiveSupport::Deprecation::DEFAULT_BEHAVIORS[:silence]
 
+        DeprecationToolkit::RSpecPlugin.before_suite
         ActiveSupport::Deprecation.behavior = behavior
         expect(ActiveSupport::Deprecation.behavior).to(include(behavior))
       end
