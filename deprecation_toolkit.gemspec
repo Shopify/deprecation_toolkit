@@ -23,7 +23,7 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = ">= 2.7"
 
   spec.files = %x(git ls-files -z).split("\x0").reject do |f|
-    f.match(%r{^(test)/})
+    f.match(%r{^(test|spec|\.github|gemfiles)/})
   end
   spec.require_paths = ["lib"]
 

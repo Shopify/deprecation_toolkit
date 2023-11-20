@@ -2,9 +2,14 @@
 
 ## main (unreleased)
 
+## 2.0.4 (2023-11-20)
+
+* [#90](https://github.com/Shopify/deprecation_toolkit/pull/90) & [#93](https://github.com/Shopify/deprecation_toolkit/pull/93): Stop using deprecated behavior from Active Support. (@etiennebarrie)
+* [#91](https://github.com/Shopify/deprecation_toolkit/pull/91): Require necessary Active Support core extension. (@etiennebarrie)
+
 ## 2.0.3 (2023-02-10)
 
-* [#80](https://github.com/Shopify/deprecation_toolkit/pull/80): Filter out stack trace from Gem::Deprecate deprecation messages
+* [#80](https://github.com/Shopify/deprecation_toolkit/pull/80): Filter out stack trace from Gem::Deprecate deprecation messages (@davidstosik)
 
 ## 2.0.2 (2023-02-08)
 
