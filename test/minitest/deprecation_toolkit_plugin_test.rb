@@ -119,17 +119,21 @@ module Minitest
     end
 
     test ".plugin_deprecation_toolkit_init doesn't init plugin when outside bundler context" do
-      notify_behavior = ActiveSupport::Deprecation::DEFAULT_BEHAVIORS[:notify]
-      old_bundle_gemfile = ENV["BUNDLE_GEMFILE"]
-      ENV.delete("BUNDLE_GEMFILE")
+      with_fake_application do
+        notify_behavior = ActiveSupport::Deprecation::DEFAULT_BEHAVIORS[:notify]
+        old_bundle_gemfile = ENV["BUNDLE_GEMFILE"]
+        ENV.delete("BUNDLE_GEMFILE")
 
-      ActiveSupport::Deprecation.behavior.delete(notify_behavior)
-      Minitest.plugin_deprecation_toolkit_init({})
+        deprecator = Rails.application.deprecators.first
+        deprecator.behavior.delete(notify_behavior)
 
-      refute_includes(ActiveSupport::Deprecation.behavior, notify_behavior)
-    ensure
-      ENV["BUNDLE_GEMFILE"] = old_bundle_gemfile
-      ActiveSupport::Deprecation.behavior << notify_behavior
+        Minitest.plugin_deprecation_toolkit_init({})
+
+        refute_includes(deprecator.behavior, notify_behavior)
+      ensure
+        ENV["BUNDLE_GEMFILE"] = old_bundle_gemfile
+        deprecator.behavior << notify_behavior
+      end
     end
   end
 end
