@@ -31,6 +31,23 @@ module DeprecationToolkit
         end
       end
 
+      class TestClass < RecordTest
+        test ".trigger record deprecations using correct filename in subclasses" do
+          assert_deprecations_recorded("Foo", "Bar") do
+            deprecator.warn("Foo")
+            deprecator.warn("Bar")
+
+            trigger_deprecation_toolkit_behavior
+          end
+        end
+
+        private
+
+        def recorded_deprecations(to: @deprecation_path)
+          YAML.load_file("#{to}/deprecation_toolkit/behaviors/record_test/record_test.yml").fetch(name)
+        end
+      end
+
       test ".trigger record deprecations for proc path" do
         Configuration.deprecation_path = proc do
           File.join(@deprecation_path, "prefix")
