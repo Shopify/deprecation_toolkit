@@ -62,7 +62,28 @@ module DeprecationToolkit
       capture_io do
         assert_nothing_raised do
           warn "Test warn works correctly"
+
+          trigger_deprecation_toolkit_behavior
         end
+      end
+    end
+
+    test "warn do not raise on allowed deprecations" do
+      Configuration.warnings_treated_as_deprecation = [/it is deprecation/]
+      Configuration.allowed_warnings = [/it is useful warning/]
+
+      capture_io do
+        assert_nothing_raised do
+          warn "it is useful warning"
+
+          trigger_deprecation_toolkit_behavior
+        end
+      end
+
+      assert_raises Behaviors::DeprecationIntroduced do
+        warn "#it is deprecation"
+
+        trigger_deprecation_toolkit_behavior
       end
     end
 

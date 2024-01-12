@@ -142,6 +142,19 @@ Configuration.deprecation_file_path_format = -> (test) do
 end
 ```
 
+### 🔨 `#DeprecationToolkit::Configuration#allowed_warnings`
+
+It's useful some time to throw the warning from your application code, and treat all warnings as deprecations at the same time
+
+Deprecation Toolkit allows you to configure which warnings should be treated as deprecations and which warnings is allowed to skip at the same time.
+
+This setting accepts an array of regular expressions.
+
+```ruby
+DeprecationToolkit::Configuration.warnings_treated_as_deprecation = [//]
+DeprecationToolkit::Configuration.allowed_warnings = [/Some useful warning from your code/]
+```
+
 ## RSpec
 
 By default Deprecation Toolkit uses Minitest as its test runner. To use Deprecation Toolkit with RSpec you'll have to configure it.
