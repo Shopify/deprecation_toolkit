@@ -21,5 +21,6 @@ module DeprecationToolkit
         end
       end
     end
+    config_accessor(:allowed_warnings) { [] }
   end
 end
