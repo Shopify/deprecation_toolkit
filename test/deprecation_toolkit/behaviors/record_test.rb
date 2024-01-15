@@ -31,6 +31,27 @@ module DeprecationToolkit
         end
       end
 
+      test ".trigger record deprecations records using file path when configuration is set to use file path" do
+        Configuration.deprecation_file_path_format = ->(test) do
+          Kernel.const_source_location(test.class.name)[0].sub(%r{^.*/(test/)}, '\1').sub(/\.[^.]+$/, "")
+        end
+
+        assert_deprecations_recorded("Foo", "Bar", path: "test/deprecation_toolkit/behaviors/record_test.yml") do
+          deprecator.warn("Foo")
+          deprecator.warn("Bar")
+
+          trigger_deprecation_toolkit_behavior
+        end
+      ensure
+        Configuration.deprecation_file_path_format = proc do |test|
+          if DeprecationToolkit::Configuration.test_runner == :rspec
+            test.example_group.file_path.sub(%r{^./spec/}, "").sub(/_spec.rb$/, "")
+          else
+            test.class.name.underscore
+          end
+        end
+      end
+
       test ".trigger record deprecations for proc path" do
         Configuration.deprecation_path = proc do
           File.join(@deprecation_path, "prefix")
@@ -106,16 +127,20 @@ module DeprecationToolkit
 
       private
 
-      def assert_deprecations_recorded(*deprecation_triggered, to: @deprecation_path)
+      def assert_deprecations_recorded(
+        *deprecation_triggered,
+        to: @deprecation_path,
+        path: "deprecation_toolkit/behaviors/record_test.yml"
+      )
         yield
 
         triggered = deprecation_triggered.map { |msg| "DEPRECATION WARNING: #{msg}" }
 
-        assert_equal(recorded_deprecations(to: to), triggered)
+        assert_equal(recorded_deprecations(to: to, path: path), triggered)
       end
 
-      def recorded_deprecations(to: @deprecation_path)
-        YAML.load_file("#{to}/deprecation_toolkit/behaviors/record_test.yml").fetch(name)
+      def recorded_deprecations(to: @deprecation_path, path: "deprecation_toolkit/behaviors/record_test.yml")
+        YAML.load_file("#{to}/#{path}").fetch(name)
       end
     end
   end

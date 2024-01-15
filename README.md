@@ -117,6 +117,31 @@ This setting accepts an array of regular expressions. To match on all warnings, 
 DeprecationToolkit::Configuration.warnings_treated_as_deprecation = [//]
 ```
 
+### 🔨 `#DeprecationToolkit::Configuration#deprecation_file_path_format`
+
+DeprecationToolkit allows you to choose the file path format for deprecation files.
+
+For Minitest, it defaults to using class name so the following code would correspond to `#{deprecation_path}/deprecation_toolkit/behaviors/raise_test.yml`
+
+```ruby
+module DeprecationToolkit
+  module Behaviors
+    class RaiseTest < ActiveSupport::TestCase
+    end
+  end
+end
+```
+
+For rspec if defaults to the file location with spec removed. `/spec/models/user_spec.rb` would correspond to `/models/user.yml`.
+
+If you have a specific use case you can configure this with a custom format using a proc. The proc is called with an instance of the test.
+
+```ruby
+Configuration.deprecation_file_path_format = -> (test) do
+  Kernel.const_source_location(test.class.name)[0].sub(%r{^./test/}, "").sub(/_test.rb$/, "")
+end
+```
+
 ## RSpec
 
 By default Deprecation Toolkit uses Minitest as its test runner. To use Deprecation Toolkit with RSpec you'll have to configure it.

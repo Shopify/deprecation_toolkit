@@ -48,12 +48,7 @@ module DeprecationToolkit
         Configuration.deprecation_path
       end
 
-      path =
-        if DeprecationToolkit::Configuration.test_runner == :rspec
-          test.example_group.file_path.sub(%r{^./spec/}, "").sub(/_spec.rb$/, "")
-        else
-          test.class.name.underscore
-        end
+      path = Configuration.deprecation_file_path_format.call(test)
 
       Pathname(deprecation_folder).join("#{path}.yml")
     end

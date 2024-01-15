@@ -2,6 +2,8 @@
 
 ## main (unreleased)
 
+* [#95](https://github.com/Shopify/deprecation_toolkit/pull/95): Allow configuration of deprecation file paths and file names.
+
 ## 2.0.4 (2023-11-20)
 
 * [#90](https://github.com/Shopify/deprecation_toolkit/pull/90) & [#93](https://github.com/Shopify/deprecation_toolkit/pull/93): Stop using deprecated behavior from Active Support. (@etiennebarrie)
