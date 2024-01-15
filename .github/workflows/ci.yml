@@ -17,11 +17,10 @@ jobs:
           - gemfiles/activesupport_edge.gemfile
         ruby: ["2.7", "3.0", "3.1", "3.2"]
         exclude:
-        # Active Support requires Ruby >= 2.7 as of 7.0
-        - gemfile: "gemfiles/activesupport_7.0.gemfile"
-          ruby: "2.6"
-        - gemfile: "gemfiles/activesupport_edge.gemfile"
-          ruby: "2.6"
+          - gemfile: gemfiles/activesupport_edge.gemfile
+            ruby: "2.7"
+          - gemfile: gemfiles/activesupport_edge.gemfile
+            ruby: "3.0"
     env:
       BUNDLE_GEMFILE: ${{ matrix.gemfile }}
     steps:
