@@ -52,7 +52,7 @@ end
 
 module DeprecationToolkit
   module WarningPatch
-    def warn(str)
+    def warn(str, *)
       str = DeprecationToolkit::Warning.handle_multipart(str)
       return unless str
 
@@ -62,6 +62,7 @@ module DeprecationToolkit
         super
       end
     end
+    ruby2_keywords :warn
   end
 end
 Warning.singleton_class.prepend(DeprecationToolkit::WarningPatch)
