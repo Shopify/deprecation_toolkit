@@ -2,6 +2,8 @@
 
 ## main (unreleased)
 
+## 2.1.0 (2024-01-19)
+
 * [#99](https://github.com/Shopify/deprecation_toolkit/pull/99): Fix `Warning.warn` hook to accept a category.
 * [#95](https://github.com/Shopify/deprecation_toolkit/pull/95): Allow configuration of deprecation file paths and file names.
 
