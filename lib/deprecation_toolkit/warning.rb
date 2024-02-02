@@ -38,7 +38,11 @@ module DeprecationToolkit
     end
 
     def deprecation_triggered?(str)
+      # === case equality used here to be able to use not only regexp, but any callable
+      # https://github.com/Shopify/deprecation_toolkit/commit/1d4c6e4f16ef3e036b6b500be3eb175d52536530
+      # rubocop:disable Style/CaseEquality
       DeprecationToolkit::Configuration.warnings_treated_as_deprecation.any? { |warning| warning === str }
+      # rubocop:enable Style/CaseEquality
     end
 
     def deprecator
