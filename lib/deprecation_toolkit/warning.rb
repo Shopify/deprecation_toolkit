@@ -38,7 +38,7 @@ module DeprecationToolkit
     end
 
     def deprecation_triggered?(str)
-      DeprecationToolkit::Configuration.warnings_treated_as_deprecation.any? { |warning| warning =~ str }
+      DeprecationToolkit::Configuration.warnings_treated_as_deprecation.any? { |warning| warning === str }
     end
 
     def deprecator

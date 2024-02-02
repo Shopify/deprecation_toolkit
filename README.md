@@ -117,6 +117,14 @@ This setting accepts an array of regular expressions. To match on all warnings, 
 DeprecationToolkit::Configuration.warnings_treated_as_deprecation = [//]
 ```
 
+In addition to regexps, anything that responds to `===` can be a matcher, for instance a proc:
+
+```ruby
+DeprecationToolkit::Configuration.warnings_treated_as_deprecation = [
+  ->(warning) { !warning.match?(/not a deprecation/)}
+]
+```
+
 ### 🔨 `#DeprecationToolkit::Configuration#deprecation_file_path_format`
 
 DeprecationToolkit allows you to choose the file path format for deprecation files.
