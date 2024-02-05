@@ -2,6 +2,9 @@
 
 ## main (unreleased)
 
+## 2.2.0 (2024-02-05)
+
+* Restore Rails 6.1 compatibility.
 * Accept anything that responds to `===` in `Configuration.warnings_treated_as_deprecation`.
 
 ## 2.1.0 (2024-01-19)
