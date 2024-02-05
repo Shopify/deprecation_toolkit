@@ -27,5 +27,5 @@ Gem::Specification.new do |spec|
   end
   spec.require_paths = ["lib"]
 
-  spec.add_runtime_dependency("activesupport", ">= 7.0")
+  spec.add_runtime_dependency("activesupport", ">= 6.1")
 end
