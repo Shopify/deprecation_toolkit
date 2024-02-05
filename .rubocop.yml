@@ -11,3 +11,6 @@ Style/MethodCallWithArgsParentheses:
   Exclude:
     - Gemfile
     - gemfiles/*
+
+Style/CaseEquality:
+  Enabled: false
