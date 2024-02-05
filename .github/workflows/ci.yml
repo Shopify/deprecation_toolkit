@@ -10,6 +10,7 @@ jobs:
       matrix:
         gemfile:
           - Gemfile
+          - gemfiles/activesupport_6.1.gemfile
           - gemfiles/activesupport_7.0.gemfile
           - gemfiles/activesupport_7.1.gemfile
           - gemfiles/activesupport_edge.gemfile

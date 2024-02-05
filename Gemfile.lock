@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     deprecation_toolkit (2.1.0)
-      activesupport (>= 7.0)
+      activesupport (>= 6.1)
 
 GEM
   remote: https://rubygems.org/
