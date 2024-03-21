@@ -120,7 +120,6 @@ module DeprecationToolkit
 
         assert_match(/.*#example is deprecated; use new_example instead\./, recorded_deprecation)
         refute_match(/called from/, recorded_deprecation)
-
       ensure
         Configuration.warnings_treated_as_deprecation = previous_warnings_treated_as_deprecation
       end

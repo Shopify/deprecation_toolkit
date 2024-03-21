@@ -2,8 +2,10 @@
 
 module DeprecationToolkit
   module Behaviors
-    class Disabled
-      def self.trigger(*)
+    module Disabled
+      extend self
+
+      def trigger(*)
       end
     end
   end

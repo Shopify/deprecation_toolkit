@@ -30,8 +30,10 @@ module DeprecationToolkit
         MyTest = Class.new(::Minitest::Test) do
           include TestDeprecator
 
-          def self.name
-            "MyTest"
+          class << self
+            def name
+              "MyTest"
+            end
           end
 
           def test_generate_deprecation
