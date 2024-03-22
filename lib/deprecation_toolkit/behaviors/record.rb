@@ -2,10 +2,11 @@
 
 module DeprecationToolkit
   module Behaviors
-    class Record
+    module Record
+      extend self
       extend ReadWriteHelper
 
-      def self.trigger(test, collector, _)
+      def trigger(test, collector, _)
         deprecation_file = recorded_deprecations_path(test)
 
         write(deprecation_file, test_name(test) => collector.deprecations_without_stacktrace)

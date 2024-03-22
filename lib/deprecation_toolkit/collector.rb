@@ -65,11 +65,7 @@ module DeprecationToolkit
     private
 
     def active_support_deprecation_sub_params
-      if ActiveSupport.gem_version.to_s < "5.0"
-        [/\W\s\(called from .*\)$/, ""]
-      else
-        [/ \(called from .*\)$/, ""]
-      end
+      [/ \(called from .*\)$/, ""]
     end
 
     def gem_deprecate_sub_params

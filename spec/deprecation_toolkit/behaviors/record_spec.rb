@@ -64,7 +64,7 @@ RSpec.describe(DeprecationToolkit::Behaviors::Record) do
     yield
 
     recorded = YAML.load_file(
-      "#{@deprecation_path}/deprecation_toolkit/behaviors/record.yml"
+      "#{@deprecation_path}/deprecation_toolkit/behaviors/record.yml",
     ).fetch("test_" + example.full_description.underscore.squish.tr(" ", "_"))
     triggered = deprecation_triggered.map { |msg| "DEPRECATION WARNING: #{msg}" }
 

@@ -2,8 +2,10 @@
 
 module DeprecationToolkit
   module Behaviors
-    class Raise
-      def self.trigger(_test, current_deprecations, recorded_deprecations)
+    module Raise
+      extend self
+
+      def trigger(_test, current_deprecations, recorded_deprecations)
         error_class = if current_deprecations.size > recorded_deprecations.size
           DeprecationIntroduced
         elsif current_deprecations.size < recorded_deprecations.size

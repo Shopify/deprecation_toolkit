@@ -4,12 +4,13 @@ require "json"
 
 module DeprecationToolkit
   module Behaviors
-    class CIRecordHelper
+    module CIRecordHelper
+      extend self
       extend ReadWriteHelper
 
       HEADER = "[DeprecationToolkit]"
 
-      def self.trigger(test, current_deprecations, _recorded_deprecations)
+      def trigger(test, current_deprecations, _recorded_deprecations)
         filename = recorded_deprecations_path(test)
 
         to_output = {
