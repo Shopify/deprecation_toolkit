@@ -19,10 +19,13 @@ module DeprecationToolkit
     private
 
     def deprecation_allowed?(payload)
-      allowed_deprecations, procs = Configuration.allowed_deprecations.partition { |el| el.is_a?(Regexp) }
-
-      allowed_deprecations.any? { |regex| regex =~ payload[:message] } ||
-        procs.any? { |proc| proc.call(payload[:message], payload[:callstack]) }
+      Configuration.allowed_deprecations.any? do |rule|
+        if rule.is_a?(Regexp)
+          rule.match?(payload[:message])
+        else
+          rule.call(payload[:message], payload[:callstack])
+        end
+      end
     end
   end
 end
