@@ -48,11 +48,13 @@ module DeprecationToolkit
       end
     end
   end
-end
 
-module DeprecationToolkit
   module WarningPatch
     def warn(str, *)
+      if Configuration.warnings_treated_as_deprecation.empty?
+        return super
+      end
+
       str = DeprecationToolkit::Warning.handle_multipart(str)
       return unless str
 
@@ -64,5 +66,6 @@ module DeprecationToolkit
     end
     ruby2_keywords :warn
   end
+
+  ::Warning.singleton_class.prepend(WarningPatch)
 end
-Warning.singleton_class.prepend(DeprecationToolkit::WarningPatch)
