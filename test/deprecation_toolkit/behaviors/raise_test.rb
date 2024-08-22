@@ -13,6 +13,8 @@ module DeprecationToolkit
       end
 
       teardown do
+        # ensure we don't get warnings for missing assertions
+        pass # we have assertions in trigger_deprecation_toolkit_behavior
         Configuration.behavior = @previous_configuration
       end
 
