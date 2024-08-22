@@ -170,6 +170,10 @@ It's possible to record deprecations while running your specs by adding an ENV['
 DEPRECATION_BEHAVIOR="record" bundle exec rspec path/to/file_spec.rb
 ```
 
+## Usage without Rails
+
+Without Rails, you'll need to make sure your `ActiveSupport::Deprecation` instances use the [`:notify` behavior](https://api.rubyonrails.org/classes/ActiveSupport/Deprecation/Behavior.html#method-i-behavior-3D).
+
 ## License
 
 Deprecation Toolkit is licensed under the [MIT license](LICENSE.txt).
