@@ -2,10 +2,14 @@
 
 ## main (unreleased)
 
+## 2.2.1 (2024-08-23)
+
+* [#111](https://github.com/Shopify/deprecation_toolkit/pull/111) Fix support for Active Support 7.2 without Rails.
+
 ## 2.2.0 (2024-02-05)
 
 * Restore Rails 6.1 compatibility.
-* Accept anything that responds to `===` in `Configuration.warnings_treated_as_deprecation`.
+* [#96](https://github.com/Shopify/deprecation_toolkit/pull/96) Accept anything that responds to `===` in `Configuration.warnings_treated_as_deprecation`.
 
 ## 2.1.0 (2024-01-19)
 
