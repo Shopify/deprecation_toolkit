@@ -64,6 +64,16 @@ module Minitest
       end
     end
 
+    if ActiveSupport.gem_version >= Gem::Version.new("7.2.0")
+      test ".plugin_deprecation_toolkit_init doesn't try to set behavior on ActiveSupport::Deprecation if Rails isn't defined" do
+        stub_const(Object, :Rails, Object.new) do
+          assert_nothing_raised do
+            Minitest.plugin_deprecation_toolkit_init({})
+          end
+        end
+      end
+    end
+
     test ".plugin_deprecation_toolkit_init add `notify` behavior to the deprecations behavior list with Rails.application.deprecators" do
       behavior = ActiveSupport::Deprecation::DEFAULT_BEHAVIORS[:notify]
 

@@ -44,7 +44,7 @@ module DeprecationToolkit
     def each_deprecator(&block)
       if defined?(Rails.application) && Rails.application.respond_to?(:deprecators)
         Rails.application.deprecators.each(&block)
-      else
+      elsif ActiveSupport::Deprecation.respond_to?(:behavior)
         block.call(ActiveSupport::Deprecation)
       end
     end
