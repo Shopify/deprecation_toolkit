@@ -7,7 +7,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (7.1.4.1)
+    activesupport (7.1.4.2)
       base64
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
