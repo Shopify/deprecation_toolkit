@@ -172,11 +172,19 @@ DEPRECATION_BEHAVIOR="record" bundle exec rspec path/to/file_spec.rb
 
 ## Usage without Rails
 
-Without Rails, you'll need to make sure your `ActiveSupport::Deprecation` instances use the [`:notify` behavior](https://api.rubyonrails.org/classes/ActiveSupport/Deprecation/Behavior.html#method-i-behavior-3D) and the `attach_to` is the name of the gem (or repository) like the following example: 
+Without Rails, you'll need to make sure your `ActiveSupport::Deprecation` instances use the [`:notify` behavior](https://api.rubyonrails.org/classes/ActiveSupport/Deprecation/Behavior.html#method-i-behavior-3D) and the `attach_to` is the underscored version of the deprecator's `gem_name` (this is how the `:notify` behavior works):
 
 ```ruby
+# defined in the gem:
+MyGem.deprecator = ActiveSupport::Deprecation.new("2.0", "MyGem::Something")
+
+# in the test helper:
+MyGem.deprecator.behavior = :notify
+
 DeprecationToolkit::Configuration.configure do |config|
-  config.attach_to = ["the_repository_name"]
+  config.attach_to = MyGem.deprecator.gem_name.underscore.tr("/", "_")
+  # or more simply
+  # config.attach_to = "my_gem_something"
   config.behavior = :notify
 end
 ```
