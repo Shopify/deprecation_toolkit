@@ -5,6 +5,7 @@
 ## 2.2.1 (2024-08-23)
 
 * [#111](https://github.com/Shopify/deprecation_toolkit/pull/111) Fix support for Active Support 7.2 without Rails.
+* Drop support for Ruby 2.7.
 
 ## 2.2.0 (2024-02-05)
 
