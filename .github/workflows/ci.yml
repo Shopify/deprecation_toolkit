@@ -11,13 +11,14 @@ jobs:
       matrix:
         gemfile:
           - Gemfile
-          - gemfiles/activesupport_6.1.gemfile
           - gemfiles/activesupport_7.0.gemfile
           - gemfiles/activesupport_7.1.gemfile
           - gemfiles/activesupport_7.2.gemfile
           - gemfiles/activesupport_edge.gemfile
         ruby: ["3.1", "3.2", "3.3"]
         exclude:
+          - gemfile: Gemfile
+            ruby: "3.1"
           - gemfile: gemfiles/activesupport_edge.gemfile
             ruby: "3.1"
     env:
