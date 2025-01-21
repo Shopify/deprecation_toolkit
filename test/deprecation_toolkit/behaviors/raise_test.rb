@@ -34,21 +34,25 @@ module DeprecationToolkit
           The recorded deprecations needs to be updated to reflect your changes.
           You can re-record deprecations by adding the `--record-deprecations` flag when running your tests.
 
+          ****** The following deprecations were removed: ******
           DEPRECATION WARNING: Bar
+          ******************************************************
         EOM
 
         deprecator.warn("Foo")
       end
 
-      test ".trigger raises a DeprecationRemoved when less deprecations than expected are triggerd and mismatches" do
+      test ".trigger raises a DeprecationRemoved when less deprecations than expected are triggered and mismatches" do
         @expected_exception_class = DeprecationRemoved
         @expected_exception_message = <<~EOM
           You have removed deprecations from the codebase. Thanks for being an awesome person.
           The recorded deprecations needs to be updated to reflect your changes.
           You can re-record deprecations by adding the `--record-deprecations` flag when running your tests.
 
+          ****** The following deprecations were removed: ******
           DEPRECATION WARNING: A
           DEPRECATION WARNING: B
+          ******************************************************
         EOM
 
         deprecator.warn("C")

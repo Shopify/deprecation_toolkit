@@ -5,7 +5,7 @@ test_.trigger_raises_a_DeprecationRemoved_error_when_deprecations_are_removed:
 test_.trigger_does_not_raise_when_deprecations_are_triggered_but_were_already_recorded:
 - 'DEPRECATION WARNING: Foo'
 - 'DEPRECATION WARNING: Bar'
-test_.trigger_raises_a_DeprecationRemoved_when_less_deprecations_than_expected_are_triggerd_and_mismatches:
+test_.trigger_raises_a_DeprecationRemoved_when_less_deprecations_than_expected_are_triggered_and_mismatches:
 - 'DEPRECATION WARNING: A'
 - 'DEPRECATION WARNING: B'
 test_.trigger_raises_a_DeprecationMismatch_when_same_number_of_deprecations_are_triggered_with_mismatches:
