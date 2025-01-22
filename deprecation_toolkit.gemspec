@@ -22,9 +22,7 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = ">= 3.0.0"
 
-  spec.files = %x(git ls-files -z).split("\x0").reject do |f|
-    f.match(%r{^(test|spec|\.github|gemfiles)/})
-  end
+  spec.files = Dir["lib/**/*", "LICENSE.txt", "README.md"]
   spec.require_paths = ["lib"]
 
   spec.add_runtime_dependency("activesupport", ">= 6.1")
