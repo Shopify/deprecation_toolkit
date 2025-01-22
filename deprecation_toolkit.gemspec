@@ -15,7 +15,7 @@ Gem::Specification.new do |spec|
   spec.license = "MIT"
 
   spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = "https://github.com/shopify/deprecation_toolkit"
+  spec.metadata["source_code_uri"] = "https://github.com/Shopify/deprecation_toolkit/tree/v#{spec.version}"
   spec.metadata["changelog_uri"] = "https://github.com/Shopify/deprecation_toolkit/blob/main/CHANGELOG.md"
 
   spec.metadata["allowed_push_host"] = "https://rubygems.org"
