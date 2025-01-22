@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+# Necessary for activesupport (~> 7.0.0) + concurrent-ruby (1.3.5)
+require "logger"
+
 $LOAD_PATH.unshift(File.expand_path("../lib", __dir__))
 require "deprecation_toolkit"
 
