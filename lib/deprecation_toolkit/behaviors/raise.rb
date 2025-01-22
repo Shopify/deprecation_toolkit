@@ -34,7 +34,9 @@ module DeprecationToolkit
           You have introduced new deprecations in the codebase. Fix or record them in order to discard this error.
           #{record_message}
 
+          ******* The following deprecations were added: *******
           #{introduced_deprecations.join("\n")}
+          ******************************************************
         EOM
 
         super(message)
@@ -57,7 +59,9 @@ module DeprecationToolkit
           The recorded deprecations needs to be updated to reflect your changes.
           #{record_message}
 
+          ****** The following deprecations were removed: ******
           #{removed_deprecations.join("\n")}
+          ******************************************************
         EOM
 
         super(message)
