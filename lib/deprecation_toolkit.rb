@@ -35,8 +35,6 @@ module DeprecationToolkit
     end
 
     def attach_subscriber
-      return if DeprecationSubscriber.already_attached?
-
       Configuration.attach_to.each do |gem_name|
         DeprecationSubscriber.attach_to(gem_name)
       end
