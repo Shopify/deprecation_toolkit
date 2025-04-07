@@ -32,6 +32,10 @@ module Minitest
       end
     end
 
+    teardown do
+      DeprecationToolkit::DeprecationSubscriber.detach_from(:rails)
+    end
+
     test ".plugin_deprecation_toolkit_options when running test with the `-r` flag" do
       option_parser = OptionParser.new
       options = {}
@@ -125,7 +129,9 @@ module Minitest
         trigger_deprecation_toolkit_behavior
       end
 
-      assert_equal 1, error.message.scan("DEPRECATION WARNING: Deprecated!").count
+      assert_equal(1, error.message.scan("DEPRECATION WARNING: Deprecated!").count)
+    ensure
+      DeprecationToolkit::DeprecationSubscriber.detach_from(:my_gem)
     end
 
     test ".plugin_deprecation_toolkit_init doesn't init plugin when outside bundler context" do
