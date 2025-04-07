@@ -16,6 +16,9 @@ module DeprecationToolkit
     autoload :Raise,                   "deprecation_toolkit/behaviors/raise"
     autoload :Record,                  "deprecation_toolkit/behaviors/record"
     autoload :CIRecordHelper,          "deprecation_toolkit/behaviors/ci_record_helper"
+    autoload :DeprecationIntroduced,   "deprecation_toolkit/behaviors/raise"
+    autoload :DeprecationRemoved,      "deprecation_toolkit/behaviors/raise"
+    autoload :DeprecationMismatch,     "deprecation_toolkit/behaviors/raise"
   end
 
   class << self
