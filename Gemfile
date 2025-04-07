@@ -6,6 +6,7 @@ gemspec
 
 gem "bundler"
 gem "minitest"
+gem "minitest-bisect"
 gem "rake"
 gem "rspec"
 gem "rubocop-shopify"
