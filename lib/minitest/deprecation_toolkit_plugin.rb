@@ -14,6 +14,10 @@ module Minitest
 
     require "deprecation_toolkit"
 
+    setup_deprecation_toolkit(options)
+  end
+
+  def setup_deprecation_toolkit(options)
     if options[:record_deprecations]
       DeprecationToolkit::Configuration.behavior = DeprecationToolkit::Behaviors::Record
     end

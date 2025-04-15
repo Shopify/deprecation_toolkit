@@ -16,6 +16,9 @@ module DeprecationToolkit
     autoload :Raise,                   "deprecation_toolkit/behaviors/raise"
     autoload :Record,                  "deprecation_toolkit/behaviors/record"
     autoload :CIRecordHelper,          "deprecation_toolkit/behaviors/ci_record_helper"
+    autoload :DeprecationIntroduced,   "deprecation_toolkit/behaviors/raise"
+    autoload :DeprecationRemoved,      "deprecation_toolkit/behaviors/raise"
+    autoload :DeprecationMismatch,     "deprecation_toolkit/behaviors/raise"
   end
 
   class << self
@@ -32,8 +35,6 @@ module DeprecationToolkit
     end
 
     def attach_subscriber
-      return if DeprecationSubscriber.already_attached?
-
       Configuration.attach_to.each do |gem_name|
         DeprecationSubscriber.attach_to(gem_name)
       end
