@@ -15,31 +15,28 @@ module DeprecationToolkit
     end
 
     def write(deprecation_file, deprecations_to_record)
-      create_deprecation_file(deprecation_file) unless deprecation_file.exist?
+      original_deprecations = deprecation_file.exist? ? YAML.load_file(deprecation_file) : {}
+      updated_deprecations = original_deprecations.dup
 
-      content = YAML.load_file(deprecation_file)
-
-      deprecations_to_record.each do |test, deprecations|
-        if deprecations.any?
-          content[test] = deprecations
+      deprecations_to_record.each do |test, deprecation_to_record|
+        if deprecation_to_record.any?
+          updated_deprecations[test] = deprecation_to_record
         else
-          content.delete(test)
+          updated_deprecations.delete(test)
         end
       end
 
-      if content.any?
-        deprecation_file.write(YAML.dump(content))
-      else
+      if updated_deprecations.any?
+        if updated_deprecations != original_deprecations
+          deprecation_file.dirname.mkpath
+          deprecation_file.write(YAML.dump(updated_deprecations.sort.to_h))
+        end
+      elsif deprecation_file.exist?
         deprecation_file.delete
       end
     end
 
     private
-
-    def create_deprecation_file(deprecation_file)
-      deprecation_file.dirname.mkpath
-      deprecation_file.write(YAML.dump({}))
-    end
 
     def recorded_deprecations_path(test)
       deprecation_folder = if Configuration.deprecation_path.is_a?(Proc)
