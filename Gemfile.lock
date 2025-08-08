@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    deprecation_toolkit (2.2.3)
+    deprecation_toolkit (2.2.4)
       activesupport (>= 6.1)
 
 GEM
