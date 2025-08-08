@@ -2,6 +2,18 @@
 
 ## main (unreleased)
 
+## 2.2.4 (2025-08-08)
+
+* [#136](https://github.com/Shopify/deprecation_toolkit/pull/136) Stable write logic.
+
+## 2.2.3 (2025-04-16)
+
+* [#131](https://github.com/Shopify/deprecation_toolkit/pull/131) Allow deprecation toolkit to be attached to multiple gems
+
+## 2.2.2 (2025-01-23)
+
+* [#125](https://github.com/Shopify/deprecation_toolkit/pull/125) Make deprecator messaging clearer
+
 ## 2.2.1 (2024-08-23)
 
 * [#111](https://github.com/Shopify/deprecation_toolkit/pull/111) Fix support for Active Support 7.2 without Rails.
