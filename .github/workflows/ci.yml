@@ -26,7 +26,7 @@ jobs:
     steps:
 
     - name: Check out code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v5
 
     - name: Set up Ruby ${{ matrix.ruby }}
       uses: ruby/setup-ruby@v1
@@ -44,7 +44,7 @@ jobs:
     name: Rubocop
     steps:
     - name: Check out code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v5
 
     - uses: ruby/setup-ruby@v1
       with:
