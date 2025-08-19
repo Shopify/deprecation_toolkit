@@ -37,8 +37,9 @@ module DeprecationToolkit
       str
     end
 
-    def deprecation_triggered?(str)
-      DeprecationToolkit::Configuration.warnings_treated_as_deprecation.any? { |warning| warning === str }
+    def deprecation_triggered?(str, callstack: [])
+      DeprecationToolkit::Configuration.warnings_treated_as_deprecation.any? { |warning| warning === str } &&
+        !DeprecationToolkit::DeprecationAllowed.call({ message: str, callstack: callstack })
     end
 
     def deprecator
@@ -51,6 +52,7 @@ module DeprecationToolkit
 
   module WarningPatch
     def warn(str, *)
+      callstack = caller[0,20]
       if Configuration.warnings_treated_as_deprecation.empty?
         return super
       end
@@ -58,7 +60,7 @@ module DeprecationToolkit
       str = DeprecationToolkit::Warning.handle_multipart(str)
       return unless str
 
-      if DeprecationToolkit::Warning.deprecation_triggered?(str)
+      if DeprecationToolkit::Warning.deprecation_triggered?(str, callstack: callstack)
         DeprecationToolkit::Warning.deprecator.warn(str)
       else
         super

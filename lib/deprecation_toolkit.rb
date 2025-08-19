@@ -10,6 +10,7 @@ module DeprecationToolkit
   autoload :Collector,                 "deprecation_toolkit/collector"
   autoload :ReadWriteHelper,           "deprecation_toolkit/read_write_helper"
   autoload :TestTriggerer,             "deprecation_toolkit/test_triggerer"
+  autoload :DeprecationAllowed,        "deprecation_toolkit/deprecation_allowed"
 
   module Behaviors
     autoload :Disabled,                "deprecation_toolkit/behaviors/disabled"

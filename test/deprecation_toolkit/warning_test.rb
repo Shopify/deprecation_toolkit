@@ -6,10 +6,12 @@ module DeprecationToolkit
   class WarningTest < ActiveSupport::TestCase
     setup do
       @previous_warnings_treated_as_deprecation = Configuration.warnings_treated_as_deprecation
+      @previous_allowed_deprecations = Configuration.allowed_deprecations
     end
 
     teardown do
       Configuration.warnings_treated_as_deprecation = @previous_warnings_treated_as_deprecation
+      Configuration.allowed_deprecations = @previous_allowed_deprecations
     end
 
     test "treats warnings as deprecations" do
@@ -79,6 +81,20 @@ module DeprecationToolkit
 
       assert_match(/Using the last argument as keyword parameters/, error.message)
       assert_match(/The called method/, error.message)
+    end
+
+    test "using warnings_treated_as_deprecation do not supress warn messages if the deprecation is allowed" do
+      Configuration.allowed_deprecations = [/#example is deprecated/]
+      Configuration.warnings_treated_as_deprecation = [//]
+
+      captured_io = capture_io do
+        assert_nothing_raised do
+          warn("#example is deprecated")
+          trigger_deprecation_toolkit_behavior
+        end
+      end
+      line_msg = captured_io.find { |line| line.include?("#example is deprecated") }
+      assert_equal("#example is deprecated\n", line_msg)
     end
   end
 end

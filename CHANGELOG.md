@@ -2,6 +2,8 @@
 
 ## main (unreleased)
 
+* [#140](https://github.com/Shopify/deprecation_toolkit/pull/140) Fixed a bug where `warnings_treated_as_deprecation` would suppress warnings even if they were explicitly allowed.
+
 ## 2.2.4 (2025-08-08)
 
 * [#136](https://github.com/Shopify/deprecation_toolkit/pull/136) Stable write logic.

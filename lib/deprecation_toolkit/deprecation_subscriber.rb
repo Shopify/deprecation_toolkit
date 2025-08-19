@@ -59,19 +59,7 @@ module DeprecationToolkit
     def deprecation(event)
       message = event.payload[:message]
 
-      Collector.collect(message) unless deprecation_allowed?(event.payload)
-    end
-
-    private
-
-    def deprecation_allowed?(payload)
-      Configuration.allowed_deprecations.any? do |rule|
-        if rule.is_a?(Regexp)
-          rule.match?(payload[:message])
-        else
-          rule.call(payload[:message], payload[:callstack])
-        end
-      end
+      Collector.collect(message) unless DeprecationToolkit::DeprecationAllowed.call(event.payload)
     end
   end
 end
