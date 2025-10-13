@@ -33,7 +33,7 @@ GEM
     json (2.7.2)
     language_server-protocol (3.17.0.3)
     logger (1.6.1)
-    minitest (5.25.5)
+    minitest (5.26.0)
     minitest-bisect (1.7.0)
       minitest-server (~> 1.0)
       path_expander (~> 1.1)
