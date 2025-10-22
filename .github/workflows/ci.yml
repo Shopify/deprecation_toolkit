@@ -14,6 +14,7 @@ jobs:
           - gemfiles/activesupport_7.0.gemfile
           - gemfiles/activesupport_7.1.gemfile
           - gemfiles/activesupport_7.2.gemfile
+          - gemfiles/activesupport_8.0.gemfile
           - gemfiles/activesupport_edge.gemfile
         ruby: ["3.2", "3.3", "3.4"]
     env:

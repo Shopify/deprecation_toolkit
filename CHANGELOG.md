@@ -2,6 +2,7 @@
 
 ## main (unreleased)
 
+* Drop support for Rails 6.1.
 * Drop support for Ruby 3.0 and 3.1.
 
 ## 2.2.4 (2025-08-08)
