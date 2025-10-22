@@ -23,5 +23,27 @@ module DeprecationToolkit
     test ".test_runner is by default set to `minitest`" do
       assert_equal :minitest, Configuration.test_runner
     end
+
+    test ".configure allows setting configuration options" do
+      previous_behavior = Configuration.behavior
+
+      Configuration.configure do |config|
+        config.behavior = Behaviors::Disabled
+      end
+
+      assert_equal(Behaviors::Disabled, Configuration.behavior)
+    ensure
+      Configuration.behavior = previous_behavior
+    end
+
+    test ".config can be used to configure" do
+      previous_behavior = Configuration.behavior
+
+      DeprecationToolkit::Configuration.config.behavior = Behaviors::Disabled
+
+      assert_equal(Behaviors::Disabled, Configuration.behavior)
+    ensure
+      Configuration.behavior = previous_behavior
+    end
   end
 end
