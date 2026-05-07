@@ -10,8 +10,7 @@
 6. Commit changes on a new branch and open a PR.
 7. **Draft** a [new release][github-new-release] on GitHub, but **do not publish it yet**.
 8. Once you have received approval on your PR, merge it into `main`.
-9. Deploy using the [ShipIt][shipit] UI, and **verify** the new version is available on [RubyGems][rubygems].
-10. Publish the drafted release, tagging the deployed commit (should be `HEAD` of the `main` branch) with a tag of the form `vMAJOR.MINOR.PATCH`.
+9. Publish the drafted release, tagging the deployed commit (should be `HEAD` of the `main` branch) with a tag of the form `vMAJOR.MINOR.PATCH`.
 
 If something goes wrong during the deploy process, address it and tag whatever commit was successfully deployed as that version.
 
