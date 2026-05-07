@@ -9,7 +9,22 @@ module DeprecationToolkit
   module ReadWriteHelper
     def read(test)
       deprecation_file = Bundler.root.join(recorded_deprecations_path(test))
-      YAML.load(deprecation_file.read).fetch(test_name(test), [])
+      data = YAML.load(deprecation_file.read)
+      name = test_name(test)
+
+      # Fast path: exact match
+      return data[name] if data.key?(name)
+
+      # Fallback: match by normalized name (handles tag addition/removal)
+      normalized_name = normalized_test_name(name)
+      return data[normalized_name] if data.key?(normalized_name)
+
+      # Fallback: iterate over all normalized keys
+      data.each do |key, deprecations|
+        return deprecations if normalized_test_name(key) == normalized_name
+      end
+
+      []
     rescue Errno::ENOENT
       []
     end
@@ -19,6 +34,10 @@ module DeprecationToolkit
       updated_deprecations = original_deprecations.dup
 
       deprecations_to_record.each do |test, deprecation_to_record|
+        # Remove any stale key that normalizes to the same name
+        normalized = normalized_test_name(test)
+        updated_deprecations.delete_if { |key, _| key != test && normalized_test_name(key) == normalized }
+
         if deprecation_to_record.any?
           updated_deprecations[test] = deprecation_to_record
         else
@@ -62,6 +81,10 @@ module DeprecationToolkit
       else
         test.name
       end
+    end
+
+    def normalized_test_name(name)
+      DeprecationToolkit::Configuration.deprecation_test_name_normalize.call(name)
     end
   end
 end

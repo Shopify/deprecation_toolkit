@@ -29,6 +29,11 @@ module DeprecationToolkit
     end
     singleton_class.attr_accessor(:deprecation_file_path_format)
 
+    @deprecation_test_name_normalize = proc do |test_name|
+      test_name
+    end
+    singleton_class.attr_accessor(:deprecation_test_name_normalize)
+
     class << self
       def configure
         yield self

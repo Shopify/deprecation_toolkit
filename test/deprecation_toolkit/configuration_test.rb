@@ -24,6 +24,10 @@ module DeprecationToolkit
       assert_equal :minitest, Configuration.test_runner
     end
 
+    test ".deprecation_test_name_normalize is by default an identity proc" do
+      assert_equal "test_foo", Configuration.deprecation_test_name_normalize.call("test_foo")
+    end
+
     test ".configure allows setting configuration options" do
       previous_behavior = Configuration.behavior
 
