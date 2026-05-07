@@ -1,8 +1,9 @@
 # Change log
 
-## main (unreleased)
+## 2.4.0 (2026-05-07)
 
 * Drop support for Ruby 3.2.
+* Introduce a configurable `deprecation_test_name_normalize` proc that allows fuzzy matching between the current test name and the stored YAML key.
 
 ## 2.3.0 (2025-10-22)
 
