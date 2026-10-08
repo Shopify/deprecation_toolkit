@@ -2,6 +2,7 @@
 
 require "tempfile"
 require "json"
+require "pathname"
 require "active_support/core_ext/hash"
 require "rake"
 require_relative "../deprecation_toolkit/read_write_helper"
@@ -45,8 +46,16 @@ class CIRecorder
   end
 
   def generate_deprecations_file(deprecations_to_record)
+    configured_path = DeprecationToolkit::Configuration.deprecation_path
+    allowed_directory = Pathname(configured_path).expand_path if configured_path.is_a?(String)
     deprecations_to_record.each do |filename, deprecations|
-      write(Pathname(filename), deprecations)
+      destination = Pathname(filename).expand_path
+      if allowed_directory
+        relative_path = destination.relative_path_from(allowed_directory)
+        raise ArgumentError, "Deprecation file is outside #{allowed_directory}: #{filename}" if relative_path.each_filename.first == ".."
+      end
+
+      write(destination, deprecations)
     end
   end
 end

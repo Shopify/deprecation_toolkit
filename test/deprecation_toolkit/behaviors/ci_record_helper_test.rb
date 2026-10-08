@@ -55,6 +55,40 @@ module DeprecationToolkit
         assert_predicate success_result2, :passed?
       end
 
+      test "CI recorder rejects filenames outside the deprecation directory" do
+        Dir.mktmpdir do |outside_directory|
+          outside_file = File.join(outside_directory, "escaped.yml")
+          deprecations = { outside_file => { "test_example" => ["DEPRECATION WARNING: example"] } }
+          File.write(@logfile_path, "test failure [DeprecationToolkit] #{JSON.generate(deprecations)}\n")
+
+          ENV["FILEPATH"] = @logfile_path
+          task = Rake::Task["deprecation_toolkit:record_from_ci_output"]
+          task.reenable
+
+          assert_raises(ArgumentError) { task.invoke }
+          refute File.exist?(outside_file)
+        ensure
+          ENV.delete("FILEPATH")
+          task&.reenable
+        end
+      end
+
+      test "CI recorder supports a proc deprecation path" do
+        Configuration.deprecation_path = ->(_test_location) { @tempfolder }
+        deprecations = { "#{@tempfolder}/my_test.yml" => { "test_example" => ["DEPRECATION WARNING: example"] } }
+        File.write(@logfile_path, "test failure [DeprecationToolkit] #{JSON.generate(deprecations)}\n")
+
+        ENV["FILEPATH"] = @logfile_path
+        task = Rake::Task["deprecation_toolkit:record_from_ci_output"]
+        task.reenable
+
+        task.invoke
+        assert File.exist?("#{@tempfolder}/my_test.yml")
+      ensure
+        ENV.delete("FILEPATH")
+        task&.reenable
+      end
+
       private
 
       def generate_raw_failure_output(ci_output)
